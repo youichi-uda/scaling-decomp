@@ -1,4 +1,4 @@
-\begin{thebibliography}{15}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -52,6 +52,18 @@ Leo Gao, Stella Biderman, Sid Black, Laurence Golding, Travis Hoppe, Charles
   and Connor Leahy.
 \newblock The {Pile}: An 800{GB} dataset of diverse text for language modeling.
 \newblock \emph{arXiv preprint arXiv:2101.00027}, 2020.
+
+\bibitem[Gao et~al.(2024)Gao, Tow, Abbasi, Biderman, Black, DiPofi, Foster,
+  Golding, Hsu, Le~Noac'h, Li, McDonell, Muennighoff, Ociepa, Phang, Reynolds,
+  Schoelkopf, Skowron, Sutawika, Tang, Thite, Wang, Wang, and
+  Zou]{gao2024lmeval}
+Leo Gao, Jonathan Tow, Baber Abbasi, Stella Biderman, Sid Black, Anthony
+  DiPofi, Charles Foster, Laurence Golding, Jeffrey Hsu, Alain Le~Noac'h,
+  Haonan Li, Kyle McDonell, Niklas Muennighoff, Chris Ociepa, Jason Phang,
+  Laria Reynolds, Hailey Schoelkopf, Aviya Skowron, Lintang Sutawika, Eric
+  Tang, Anish Thite, Ben Wang, Kevin Wang, and Andy Zou.
+\newblock A framework for few-shot language model evaluation, 2024.
+\newblock URL \url{https://github.com/EleutherAI/lm-evaluation-harness}.
 
 \bibitem[Hestness et~al.(2017)Hestness, Narang, Ardalani, Diamos, Jun,
   Kianinejad, Patwary, Yang, and Zhou]{hestness2017deep}
@@ -123,6 +135,12 @@ Rylan Schaeffer, Brando Miranda, and Sanmi Koyejo.
 \newblock In \emph{Advances in Neural Information Processing Systems
   (NeurIPS)}, volume~36, 2023.
 \newblock Best Paper Award.
+
+\bibitem[Sennrich et~al.(2016)Sennrich, Haddow, and Birch]{sennrich2016bpe}
+Rico Sennrich, Barry Haddow, and Alexandra Birch.
+\newblock Neural machine translation of rare words with subword units.
+\newblock In \emph{Proceedings of the 54th Annual Meeting of the Association
+  for Computational Linguistics (ACL)}, pp.\  1715--1725, 2016.
 
 \bibitem[Xia et~al.(2023)Xia, Artetxe, Du, Chen, and Stoyanov]{xia2023training}
 Mengzhou Xia, Mikel Artetxe, Jingfei Du, Danqi Chen, and Veselin Stoyanov.

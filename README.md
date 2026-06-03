@@ -11,7 +11,7 @@ Code, raw measurements, pre-registration, and analysis pipeline for the paper:
 For the word-initial vs word-continuation per-class scaling-law exponent gap (Δα):
 
 - **D-axis at fixed N** (4 Pythia sizes, 13–14 dense checkpoints each, Bonferroni m=4): Δα<sub>D</sub> ∈ {−0.20, −0.25, −0.37, −0.45}, all 98.75 % CIs exclude zero; magnitude grows with N.
-- **N-axis at D=300 B** (7 Pythia sizes): Δα = −0.41, 95 % CI [−0.64, −0.22]; held-out RMSE improvement +0.022 nats (marginal pre-registered pass).
+- **N-axis at D=300 B** (7 Pythia sizes, 70M excluded as anomalous): Δα = −0.41, 95 % CI [−0.64, −0.22]; held-out RMSE improvement +0.022 nats (marginal pre-registered pass).
 - **Cross-family at D=300 B** (Pythia, Pythia-deduped, Cerebras-GPT, BLOOM): all four families Δα<0 with CIs excluding zero; magnitudes span ~3× (−0.13 to −0.41) but the sign is invariant.
 - The per-class α gap is therefore a **coordinate-dependent observable**, not an intrinsic property of the per-class prediction problem.
 
@@ -39,7 +39,8 @@ analyze_multiN_daxis.py      D-axis fits across {1B, 1.4B, 6.9B, 12B}
 analyze_perD_Nfit.py         per-D N-axis fits (identifiable only at D=300B)
 analyze_joint_forms.py       5-form joint L(N,D) survey (non-identifiable on Pythia)
 analyze_joint_ND.py          ADD-form joint fit prototype
-analyze_families.py          cross-family per-class α fit (Pythia/Cerebras/OPT/GPT-2)
+analyze_families.py          cross-family driver (Pythia/Cerebras-GPT/BLOOM/Pythia-deduped
+                              via paper/make_figures.py:fig3_families)
 bootstrap_ci.py              parametric residual bootstrap
 bootstrap_joint_ND.py        bootstrap for the joint ADD form
 final_Naxis_perword.py       canonical N-axis fit + held-out adjudication
@@ -88,8 +89,11 @@ To recompute the raw `v2mt_*.json` measurements from Pythia / Cerebras-GPT /
 BLOOM checkpoints, see `measure_v2.py` and the per-family driver scripts under
 `runpod_*.sh`. Note the HuggingFace Hub mis-registration bugs documented in
 Appendix C of the paper — `use_safetensors=False` is required for some
-Pythia-2.8B revisions, and Pythia-12B step50000 is unrecoverable from the Hub
-(see `verify_checkpoints.py` *Coming soon* for the hash-comparison procedure).
+Pythia-2.8B revisions, and Pythia-12B step50000 returns NaN losses via the
+standard `transformers` API. Whether the bug is in the Hub's revision-to-blob
+mapping or in `huggingface_hub`'s client resolution layer is not adjudicated
+here — see the paper's Limitations and Appendix C.3 for the verification
+ladder we recommend any user run before trusting intermediate-step weights.
 
 ## Pre-registration
 

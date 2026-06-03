@@ -60,16 +60,21 @@ excluding zero; magnitudes span $\sim$3$\times$ ($-0.13$ to $-0.41$),
 the sign is invariant, the magnitude is not. \textbf{(iv) Per-D
 N-axis fits} are identifiable only at $D{=}300\text{B}$ (n${=}$7) and
 non-identifiable at smaller $D$ (n${=}$4--5); we report this rather
-than over-claiming. We conclude that the per-class $\alpha$ gap is a
-\textbf{coordinate-dependent observable} within the tested grid:
-single-axis decomposition at one $(N, D)$ point recovers one slice
-of a 2D pattern. Cross-paper comparison of per-class $\alpha$ values
-reported at different $(N, D)$ coordinates is not, in general,
-apples-to-apples. We additionally document HuggingFace Hub
-mis-registration bugs affecting Pythia-2.8B intermediate-step
-revisions and Pythia-12B step50000 (Appendix~\ref{app:hub}), which
-silently return wrong weights for affected revisions and which any
-scaling-law study using those checkpoints will need to work around.
+than over-claiming. Within our tested grid, single-axis per-class
+$\alpha$ varies by a factor of $\sim$2 depending on whether $N$ or $D$
+is the varied axis and on the operating point of the held axis. The
+empirical $(N, D)$ surface is only sampled densely at the
+$D{=}300\text{B}$ column (both axes identifiable simultaneously) and
+along four $N$-slices on the $D$-axis; we are not able to fit a joint
+$L_c(N, D)$ surface (Appendix~\ref{app:joint}). The headline takeaway
+is therefore that cross-paper comparison of per-class $\alpha$ values
+measured at different $(N, D)$ coordinates is not, in general, an
+apples-to-apples comparison. We also flag two HuggingFace Hub
+mis-registration bugs found during this work
+(Appendix~\ref{app:hub}); we report what we observed via the
+high-level \texttt{transformers} API and acknowledge that ruling out
+the resolution-layer caching as the locus of the bug would require
+direct LFS-blob testing we did not perform.
 \end{abstract}
 
 % =====================================================================
@@ -92,7 +97,7 @@ three additional model families.
 
 \paragraph{Position partition.} Predicted tokens partition into
 word-initial, word-continuation, and other classes via the GPT-NeoX
-BPE space marker \verb|G|. Word-continuation tokens exist only inside
+BPE space marker \texttt{\char192} (U+0120, GPT-NeoX/GPT-2 leading-space marker). Word-continuation tokens exist only inside
 multi-token words; we control this with a multi-token-only
 word-occurrence-matched aggregation (\S\ref{sec:agg}): each
 multi-token word contributes one (init-loss, mean-cont-loss) pair,
@@ -111,7 +116,16 @@ word-occurrence-matched, \S\ref{sec:agg}) and the $D$-axis dense
 ladder (\S\ref{sec:dfit}) were added in post-pre-registration
 adversarial-review rounds and are reported with explicit
 acknowledgment of their post-hoc status. Bonferroni $m{=}4$
-correction is applied across the four-$N$ $D$-axis tests.
+correction is applied to the $D$-axis four-$N$ family
+(\S\ref{sec:daxis}) because that is where the headline ``all four
+CIs exclude zero'' joint claim is sensitive to multiplicity. The
+cross-family table (\S\ref{sec:families}) and the per-$D$ N-axis
+table (\S\ref{sec:perD}) report uncorrected 95\% CIs because each
+family/each $D$ is treated as an independent replication or a
+separate identification check rather than as members of a joint
+rejection-decision family; we make this scope choice explicit so
+readers can apply additional correction if they prefer to combine
+the tests differently.
 
 \paragraph{Findings (preview).}
 \begin{enumerate}
@@ -186,9 +200,10 @@ is used in the N-axis fit and cross-family analysis).
 \subsection{Token classes}
 
 For each predicted token in the eval corpus we record (i) position
-class (word-initial / word-continuation / other) via the GPT-NeoX BPE
-space marker; (ii) within-word subword depth; (iii) frequency decile
-of the whitespace-delimited word the subword belongs to.
+class (word-initial / word-continuation / other) via the GPT-NeoX
+byte-level BPE space marker \citep{sennrich2016bpe, black2022gptneox};
+(ii) within-word subword depth; (iii) frequency decile of the
+whitespace-delimited word the subword belongs to.
 
 \subsection{Word-occurrence-matched aggregation}
 \label{sec:agg}
@@ -257,12 +272,16 @@ reason (shard-3 truncation).
 \subsection{Bootstrap}
 
 Per-axis fits use parametric residual bootstrap: resample residuals
-of the per-class power-law fit ($B = 2000$ iterations), refit on the
-original $X$ grid, report 95\% (and Bonferroni-corrected 98.75\%)
-CIs on $\dalpha$. Per-cell sampling error is negligible ($n \gg 10^5$
-per cell), so the dominant uncertainty is the small-$n_X$
-scaling-law fit, captured by the parametric bootstrap. Joint
-$L(N, D)$ fits were attempted with five functional forms
+of the per-class power-law fit ($B = 2000$ iterations, seed
+$20260603$ in the released code), refit on the original $X$ grid,
+report 95\% (and Bonferroni-corrected 98.75\%) CIs on $\dalpha$.
+Per-cell sampling error is negligible ($n \gg 10^5$ per cell), so the
+dominant uncertainty is the small-$n_X$ scaling-law fit, captured by
+the parametric bootstrap. The residual bootstrap implicitly assumes
+residuals are IID across the $X$ grid (homoscedasticity); with
+$n_N = 7$ this assumption is essentially unverifiable in-sample, and
+we acknowledge the bootstrap CI is only as good as that assumption.
+Joint $L(N, D)$ fits were attempted with five functional forms
 (Chinchilla-additive, multiplicative, Hoffmann-generalized,
 compute-only, saturation) but all are non-identifiable on our
 $(N, D)$ range; Appendix~\ref{app:joint} documents this.
@@ -289,8 +308,17 @@ At $D{=}300\text{B}$ (Pythia's training endpoint), per-class fits on
 the 7 non-anomalous final sizes with per-word matched aggregation in
 mid word-freq deciles give $\ainit = 0.56$, $E_\mathrm{init} = 2.46$;
 $\acont = 0.98$, $E_\mathrm{cont} = 0.79$; \textbf{$\dalpha = -0.41$},
-95\% bootstrap CI $[-0.64, -0.22]$, $P(\dalpha \geq 0) = 0.0000$
-(Figure~\ref{fig:naxis}).
+95\% bootstrap CI $[-0.64, -0.22]$; $0/2000$ bootstrap draws had
+$\dalpha \geq 0$, i.e.\ $P(\dalpha \geq 0) < 5\times 10^{-4}$
+(Figure~\ref{fig:naxis}). \textit{Floor--slope caveat.} With
+$n_N{=}7$ over $\sim$1.9 decades, the $L = E + A \cdot N^{-\alpha}$
+fit has a long $(E, \alpha)$ ridge: $E_\mathrm{init} = 2.46$ latches
+near the smallest observed $L_\mathrm{init}$ while
+$E_\mathrm{cont} = 0.79$ sits well below the smallest observed
+$L_\mathrm{cont}$. The shared-$E$ robustness sweep (next paragraphs)
+preserves the sign of $\dalpha$ but does not pin the magnitude
+independently of the per-class floor; we report this and revisit it
+in \S\ref{sec:limits}.
 
 \begin{figure}[t]
 \centering
@@ -299,7 +327,8 @@ $\acont = 0.98$, $E_\mathrm{cont} = 0.79$; \textbf{$\dalpha = -0.41$},
 non-anomalous Pythia sizes (160M--12B). Markers: per-word matched
 mid-decile loss. Curves: best-fit $L = A \cdot N^{-\alpha} + E$ per
 class. $\dalpha = \ainit - \acont = -0.41$, 95\% bootstrap CI
-$[-0.64, -0.22]$, $P(\dalpha \geq 0) = 0$.}
+$[-0.64, -0.22]$; $0$ of $2000$ bootstrap draws had $\dalpha \geq 0$
+(i.e.\ $P(\dalpha \geq 0) < 5{\times}10^{-4}$).}
 \label{fig:naxis}
 \end{figure}
 
@@ -317,6 +346,12 @@ in-sample bootstrap CI excluding 0 by margin $> 0.2$.)
 \paragraph{Cross-corpus sign check.} Wikitext-103 (5 train sizes
 70M--1.4B, per-word matched aggregation): $\ainit = 1.04$,
 $\acont = 1.49$, $\dalpha = -0.45$. Sign consistent with Pile.
+We include 70M in the Wikitext sign-check (but not in the main Pile
+N-axis fit) because the larger Pythia checkpoints ($\geq 2.8\text{B}$)
+were not measured on Wikitext for compute reasons, and we needed
+$n_N \geq 5$ to fit a power-law curve at all; the sign-direction
+diagnostic is robust to including the small-$N$ anomalous endpoint,
+whereas the headline magnitude fit is not.
 
 \paragraph{Shared-E robustness.} Forcing shared $E$ across classes
 ($E \in [0, E_\mathrm{cont}]$ swept) preserves the sign of $\dalpha$
@@ -351,7 +386,12 @@ $N{=}12\text{B}$.}
 \end{figure}
 
 \begin{table}[t]
-\caption{D-axis per-class fit per fixed $N$. CIs are Bonferroni-corrected (98.75\%).}
+\caption{D-axis per-class fit per fixed $N$. CIs are
+Bonferroni-corrected (98.75\% individual interval = 95\% family-wise
+with $m{=}4$). $E$ and $\alpha_D$ values are jointly fit under
+positivity constraints $E \geq 0$, $A > 0$ on a grid
+$\alpha_D \in [0.02, 1.8]$ (800 points). Reproduced exactly from
+\texttt{final\_perN\_Daxis.json}.}
 \label{tab:daxis}
 \centering
 \small
@@ -359,20 +399,26 @@ $N{=}12\text{B}$.}
 \toprule
 $N$ & $n_D$ & $\alpha_{D,\mathrm{init}}$ & $E_\mathrm{init}$ & $\alpha_{D,\mathrm{cont}}$ & $E_\mathrm{cont}$ & $\dalpha_D$ & 98.75\% CI \\
 \midrule
-1B    & 14 & 0.57 & 3.71 & 0.77 & 1.12 & $\mathbf{-0.20}$ & $[-0.29, -0.11]$ \\
-1.4B  & 14 & 0.54 & 3.39 & 0.78 & 1.01 & $\mathbf{-0.25}$ & $[-0.31, -0.18]$ \\
-6.9B  & 13 & 0.57 & 2.83 & 0.93 & 0.86 & $\mathbf{-0.37}$ & $[-0.50, -0.24]$ \\
-12B   & 14 & 0.51 & 2.55 & 0.96 & 0.84 & $\mathbf{-0.45}$ & $[-0.60, -0.30]$ \\
+1B    & 14 & 0.57 & 3.49 & 0.77 & 1.05 & $\mathbf{-0.20}$ & $[-0.29, -0.11]$ \\
+1.4B  & 14 & 0.54 & 3.18 & 0.78 & 0.96 & $\mathbf{-0.25}$ & $[-0.31, -0.18]$ \\
+6.9B  & 13 & 0.57 & 2.68 & 0.93 & 0.85 & $\mathbf{-0.37}$ & $[-0.50, -0.24]$ \\
+12B   & 14 & 0.51 & 2.36 & 0.96 & 0.82 & $\mathbf{-0.45}$ & $[-0.60, -0.30]$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 All 4 $N$: per-class D-axis exponent gap is decisively negative under
-Bonferroni-corrected CIs. The magnitude is \textbf{larger at larger
-$N$ within our tested range}: it roughly doubles from 1B ($-0.20$) to
-12B ($-0.45$). We report this as an observed monotonic pattern
-across 4 $N$ within our data; we do not claim asymptotic behavior
-beyond $N{=}12\text{B}$.
+Bonferroni-corrected CIs. The magnitude is rank-correlated with $N$
+across the four tested values ($\rho = +1$ on $n{=}4$, which is
+suggestive but not decisive --- a strict-monotone ordering of 4
+points happens by chance with probability $1/12$ under the null). We
+report this as a pattern across our four sampled $N$ values within
+our data; we do not claim monotonicity at scales we did not test, and
+we caution that per-axis fits inherit the joint $L(N, D)$
+non-identifiability (Appendix~\ref{app:joint}): part of the
+``$|\dalpha_D|$ grows with $N$'' pattern is consistent with residual
+$A \cdot N^{-\alpha_N}$ leaking into the per-$N$ $D$-axis $E$ as $N$
+grows, rather than with a genuinely $N$-dependent $D$-axis slope.
 
 \subsection{Per-D N-axis fits: identifiable only at $D{=}300\text{B}$}
 \label{sec:perD}
@@ -463,6 +509,18 @@ Cerebras and BLOOM reflect flatter $L(N)$ trajectories and, for
 BLOOM, the larger vocabulary reducing the multi-token-word sample
 within the eval corpus); the per-class \emph{difference} is the
 comparable quantity and is always negative.
+\textit{Alternative explanation for the magnitude gap.} Cerebras-GPT
+was trained at Chinchilla-optimal compute ($\approx$20 tokens per
+parameter), $\sim$5$\times$ less data than Pythia at $12\text{B}$;
+its flatter $L(N)$ and smaller $|\dalpha|$ are also consistent with
+Cerebras-GPT being on a different point of the $(N, D)$
+compute-optimal frontier than Pythia rather than with a genuine
+intrinsic difference. We therefore distinguish (a) coordinate
+dependence of $\dalpha$ \emph{within} a family (the Pythia D-axis
+result, \S\ref{sec:daxis}) from (b) magnitude differences \emph{across}
+families that are partly attributable to compute-budget choices; the
+sign-invariance claim is robust to both, the magnitude is comparable
+only within (a).
 
 \begin{table}[t]
 \caption{Cross-family N-axis replication at $D{=}300\text{B}$. All four families: sign negative, 95\% CIs exclude zero.}
@@ -542,10 +600,11 @@ gap stabilizes are not established.
 \label{sec:downstream}
 
 We measured 4 downstream tasks (lambada\_openai
-\citep{paperno2016lambada}, piqa, arc\_easy, sciq) via
-lm-evaluation-harness on Pythia $\{160\text{M}, 410\text{M},
-1\text{B}, 1.4\text{B}, 2.8\text{B}, 6.9\text{B}, 12\text{B}\}$ at
-$D{=}300\text{B}$. Per-N Pearson correlation magnitudes:
+\citep{paperno2016lambada}, piqa, arc\_easy, sciq) via the EleutherAI
+\texttt{lm-evaluation-harness} \citep{gao2024lmeval} on Pythia
+$\{160\text{M}, 410\text{M}, 1\text{B}, 1.4\text{B}, 2.8\text{B},
+6.9\text{B}, 12\text{B}\}$ at $D{=}300\text{B}$. Per-N Pearson
+correlation magnitudes:
 
 \begin{center}
 \small
@@ -607,9 +666,16 @@ content beyond aggregate}, but underpowered at $n{=}7$ within a
 single family; a multi-family / multi-task panel (e.g.,
 Pythia $+$ Cerebras $+$ BLOOM $\times$ task expansion) would be
 needed to confirm. We do not claim strict superiority on this data
-alone.
+alone. The PIQA $+0.010$ gain in particular is at the adj-$R^2$
+adjustment-noise floor at $n{=}7$, $p{=}2$ (going from $p{=}1$ to
+$p{=}2$ scales the penalty by $6/4$ vs $6/5$, so a useless second
+regressor would already cost $\sim$$(1{-}R^2)\cdot 0.3 \approx 0.009$
+of adj-$R^2$ at $R^2 \sim 0.97$); we therefore read PIQA as
+``unchanged'' and LAMBADA/ARC-easy/SCIQ as a directionally consistent
+but underpowered positive.
 
 \subsection{Class mixture is constant across $(N, D)$}
+\label{sec:mixture}
 
 Predicted-token class fractions are identical to two decimal places
 across all 8 Pythia sizes (word-initial $47.03\%$, word-continuation
@@ -670,6 +736,7 @@ to disambiguate ``intrinsic-with-coordinate-correction'' from
 ``coordinate-dependent-throughout''.
 
 \subsection{Limitations}
+\label{sec:limits}
 
 \begin{itemize}
   \item \textbf{All tested families use BPE-family tokenizers} (GPT-NeoX
@@ -717,6 +784,62 @@ to disambiguate ``intrinsic-with-coordinate-correction'' from
         and cross-family replication (\S\ref{sec:families}) were added
         after the original N-axis-only pre-registration. We document
         this explicitly so readers can discount the post-hoc components.
+  \item \textbf{Floor--slope confound.} The per-class
+        $L = E + A \cdot N^{-\alpha}$ fit has a long $(E, \alpha)$ ridge
+        at $n_N{=}7$, and our $E_\mathrm{init} = 2.46$ vs
+        $E_\mathrm{cont} = 0.79$ asymmetry means the two per-class
+        fits are not at matched floor parameterization. The shared-$E$
+        sweep preserves the sign of $\dalpha$ but does not pin its
+        magnitude under matched floors. A profile-likelihood contour
+        analysis on $(E, \alpha)$ per class is the right follow-up.
+  \item \textbf{$\acont \approx 1.0$ is consistent with Zipf-coupled
+        unigram-LM behaviour.} \citet{michaud2023quantization}
+        predicts per-class $\alpha \to 1$ when the per-class prediction
+        problem collapses to its unigram-conditioned distribution.
+        Our $\acont = 0.98$ at $D{=}300\text{B}$ and
+        $\alpha_{D,\mathrm{cont}} \in [0.77, 0.96]$ on the D-axis are
+        therefore consistent with continuation tokens being modelled
+        primarily by orthographic / morphological completion of a
+        known word (\S\ref{sec:disc}.1). A direct test --- subtracting
+        a per-class unigram log-probability from $\Lcont$ and
+        re-fitting --- would adjudicate whether the partition reduces
+        to a renamed slice of Michaud's frequency partition. We did
+        not run this test and flag it as the most important open
+        question.
+  \item \textbf{Per-axis projection inherits the joint
+        non-identifiability} (Appendix~\ref{app:joint}). If a true
+        joint $L(N, D)$ is Hoffmann-additive, the per-$N$ $D$-slice
+        $\alpha_D(N)$ mixes residual $A \cdot N^{-\alpha_N}$ into $E$.
+        Part of the ``$|\dalpha_D|$ grows with $N$'' pattern
+        (Table~\ref{tab:daxis}) is therefore consistent with an
+        $N$-axis confound rather than with a genuine $N$-dependent
+        $D$-axis slope.
+  \item \textbf{Pile-10k subset size.} $\sim$200 documents
+        ($\sim$1.23M predicted tokens per model) is small. We did not
+        re-run the four-family fit on a larger sample (full Pile
+        validation, C4, or BLOOM-native ROOTS validation) and cannot
+        rule out Pile-10k subset bias as part of the cross-family
+        magnitude variation.
+  \item \textbf{Tokenizer-partition portability.} The word-initial /
+        word-continuation partition is defined via the GPT-NeoX BPE
+        leading-space marker (\texttt{\char192}). The same convention
+        applies to GPT-2 BPE (Cerebras-GPT). For BLOOM's 250k-vocab
+        BPE the convention is similar but the predicted-token mix
+        shifts: more tokens are whole words rather than word-initial
+        + continuation pairs. The word-continuation fraction across
+        families is not quantified in this paper; a per-family
+        class-mixture table (analogous to \S\ref{sec:mixture} for
+        Pythia) would be the right follow-up.
+  \item \textbf{HF Hub bug locus.} Appendix~\ref{app:hub} reports the
+        SHA256-collision and shard-truncation symptoms as observed
+        via the high-level \texttt{transformers.AutoModelForCausalLM}
+        API. We did not perform a direct
+        \texttt{git clone + git checkout step1000 + sha256sum} of the
+        underlying LFS blob, so we cannot distinguish whether the bug
+        is in the Hub's revision-to-blob mapping or in the
+        \texttt{huggingface\_hub} client resolution layer. The
+        practical advice (verify checkpoint integrity before trusting
+        intermediate-step weights) holds either way.
 \end{itemize}
 
 % =====================================================================
@@ -733,9 +856,13 @@ In our data:
 \begin{itemize}
   \item \textbf{D-axis at fixed $N$}: $\dalpha_D$ ranges from $-0.20$
         ($N{=}1\text{B}$) to $-0.45$ ($N{=}12\text{B}$); all 4
-        Bonferroni-corrected ($m{=}4$) CIs exclude zero.
+        Bonferroni-corrected ($m{=}4$) CIs exclude zero. The
+        rank-correlation of $|\dalpha_D|$ with $N$ ($\rho{=}+1$ on
+        $n{=}4$) is suggestive but not decisive.
   \item \textbf{N-axis at $D{=}300\text{B}$}: $\dalpha = -0.41$ with
-        95\% CI $[-0.64, -0.22]$; reproduces with sign-consistent CIs
+        95\% CI $[-0.64, -0.22]$; held-out RMSE improvement
+        $+0.022$~nats is a marginal pre-registered pass
+        ($0.022$~nats vs $0.020$~nats threshold). Sign-consistent CIs
         in three additional families --- Pythia-deduped ($-0.28$),
         Cerebras-GPT ($-0.20$), and BLOOM ($-0.13$).
   \item \textbf{Per-D N-axis} at $D < 300\text{B}$ is non-identifiable
@@ -749,7 +876,8 @@ In our data:
         $0.010$--$0.037$ more adjusted $R^2$ of task accuracy than
         aggregate loss alone, on all 4 tasks --- suggestive of
         per-class predictive content beyond aggregate, but
-        underpowered at $n{=}7$.
+        underpowered at $n{=}7$ and at the adj-$R^2$ adjustment-noise
+        floor for the smallest gain (PIQA, $+0.010$).
 \end{itemize}
 
 Two methodological recommendations follow. \textbf{First}, per-class
@@ -781,13 +909,14 @@ public datasets.
 
 \subsubsection*{Broader Impact Statement}
 This paper is a methodological cautionary study of per-class
-neural scaling-law decomposition. The main practical impact is
-reproducibility: it documents two silent HuggingFace Hub
-mis-registration bugs that affect Pythia-2.8B intermediate-step
-revisions and Pythia-12B step50000, which any future scaling-law
-study using those checkpoints will need to detect and work around.
-We see no direct negative ethical or societal risk specific to this
-work.
+neural scaling-law decomposition. The main practical impact is the
+recommendation to report per-class $\alpha$ values with their
+$(N, D)$ measurement coordinate. We additionally document two
+HuggingFace Hub mis-registration bugs found during this work
+(Appendix~\ref{app:hub}); we report what we observed and flag the
+remaining uncertainty about whether the locus is Hub storage or
+client-side resolution. We see no direct negative ethical or
+societal risk specific to this work.
 
 \bibliography{references}
 \bibliographystyle{tmlr}

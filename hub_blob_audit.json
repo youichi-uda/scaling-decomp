@@ -1,0 +1,162 @@
+[
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "model.safetensors",
+    "revision": "main",
+    "commit_sha": "2a259cdd96a4beb1cdf467512e3904197345f6a9",
+    "blob_sha256": "ab496f1c3fd79e3c749a9d5414136a2c8e4224f94eecb261970315cdb0f813fe",
+    "blob_size": 5684693096
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "model.safetensors",
+    "revision": "step1000",
+    "commit_sha": "cc81f94ea2acd24862163f15126427b85b98caac",
+    "blob_sha256": "ab496f1c3fd79e3c749a9d5414136a2c8e4224f94eecb261970315cdb0f813fe",
+    "blob_size": 5684693096
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "model.safetensors",
+    "revision": "step2000",
+    "commit_sha": "7378edcedb6f1a8fa81e0cf3b116d7d0dd962258",
+    "blob_sha256": "ab496f1c3fd79e3c749a9d5414136a2c8e4224f94eecb261970315cdb0f813fe",
+    "blob_size": 5684693096
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "model.safetensors",
+    "revision": "step4000",
+    "commit_sha": "494474bbd9522f163d2921bf08f107e485b08394",
+    "blob_sha256": "ab496f1c3fd79e3c749a9d5414136a2c8e4224f94eecb261970315cdb0f813fe",
+    "blob_size": 5684693096
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "model.safetensors",
+    "revision": "step10000",
+    "commit_sha": "835c7474e2032ea69643f0ade8244a105ec626fd",
+    "blob_sha256": "ab496f1c3fd79e3c749a9d5414136a2c8e4224f94eecb261970315cdb0f813fe",
+    "blob_size": 5684693096
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "model.safetensors",
+    "revision": "step50000",
+    "commit_sha": "1936c7c2953079ceb4d564e0a01f0086bae5aab5",
+    "blob_sha256": "ab496f1c3fd79e3c749a9d5414136a2c8e4224f94eecb261970315cdb0f813fe",
+    "blob_size": 5684693096
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "model.safetensors",
+    "revision": "step100000",
+    "commit_sha": "668bcb3f3a13a908d6c5e21566fa2bdc2d9c8c65",
+    "blob_sha256": "ab496f1c3fd79e3c749a9d5414136a2c8e4224f94eecb261970315cdb0f813fe",
+    "blob_size": 5684693096
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "model.safetensors",
+    "revision": "step143000",
+    "commit_sha": "dbe7ae300a54abcdc475a33907b3dff81d25709f",
+    "blob_sha256": "462f2b960062159c3779eb1cfe5829783ea72da66b020bcbabf86bc6dd33063c",
+    "blob_size": 5550463728
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "pytorch_model.bin",
+    "revision": "main",
+    "commit_sha": "2a259cdd96a4beb1cdf467512e3904197345f6a9",
+    "blob_sha256": "36f0f93d1f5d44ca9c48a602c0788001a36ec10db9d1b84a40b81799d724c4f6",
+    "blob_size": 5684793945
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "pytorch_model.bin",
+    "revision": "step1000",
+    "commit_sha": "cc81f94ea2acd24862163f15126427b85b98caac",
+    "blob_sha256": "36f0f93d1f5d44ca9c48a602c0788001a36ec10db9d1b84a40b81799d724c4f6",
+    "blob_size": 5684793945
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "pytorch_model.bin",
+    "revision": "step2000",
+    "commit_sha": "7378edcedb6f1a8fa81e0cf3b116d7d0dd962258",
+    "blob_sha256": "36f0f93d1f5d44ca9c48a602c0788001a36ec10db9d1b84a40b81799d724c4f6",
+    "blob_size": 5684793945
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "pytorch_model.bin",
+    "revision": "step10000",
+    "commit_sha": "835c7474e2032ea69643f0ade8244a105ec626fd",
+    "blob_sha256": "36f0f93d1f5d44ca9c48a602c0788001a36ec10db9d1b84a40b81799d724c4f6",
+    "blob_size": 5684793945
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "pytorch_model.bin",
+    "revision": "step50000",
+    "commit_sha": "1936c7c2953079ceb4d564e0a01f0086bae5aab5",
+    "blob_sha256": "73468bb90e734f887b040b8a8175afd9b545b89e26dc9aac06332eaa8dd577c0",
+    "blob_size": 5684793945
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "pytorch_model.bin",
+    "revision": "step100000",
+    "commit_sha": "668bcb3f3a13a908d6c5e21566fa2bdc2d9c8c65",
+    "blob_sha256": "ced5e41d87bf847058ee594e51f5d55f0b81bcae713cf167737382caee911ac2",
+    "blob_size": 5684793945
+  },
+  {
+    "repo": "EleutherAI/pythia-2.8b",
+    "file": "pytorch_model.bin",
+    "revision": "step143000",
+    "commit_sha": "dbe7ae300a54abcdc475a33907b3dff81d25709f",
+    "blob_sha256": "a294bfcf6ff2c091091d04489a3f1c233b4106d74201e152a01f492d24e6fbaf",
+    "blob_size": 5550545787
+  },
+  {
+    "repo": "EleutherAI/pythia-12b",
+    "file": "pytorch_model-00003-of-00003.bin",
+    "revision": "main",
+    "commit_sha": "bb1e3e710cdf6b524461d543cfb5ba773f0a81b6",
+    "blob_sha256": "eb82155af2c813a9aac8bcbe12266af8a1b0be084a3d6c0d244a745e0993cca4",
+    "blob_size": 4105939923
+  },
+  {
+    "repo": "EleutherAI/pythia-12b",
+    "file": "pytorch_model-00003-of-00003.bin",
+    "revision": "step42000",
+    "commit_sha": "67b2472bcf6bfa6826bd935b933b619af1f0b0af",
+    "blob_sha256": "541de6140dc4213c0e06677b21041b61ff465b85abcfd952d820876475af9dad",
+    "blob_size": 4105939923
+  },
+  {
+    "repo": "EleutherAI/pythia-12b",
+    "file": "pytorch_model-00003-of-00003.bin",
+    "revision": "step50000",
+    "commit_sha": "a4d34351f6f5eff7df9bc89d3711ebabd4e75792",
+    "blob_sha256": "7df63b4231856f556c818d14a29b5b216205df9311bf24851b720bc20589a369",
+    "blob_size": 3896183087
+  },
+  {
+    "repo": "EleutherAI/pythia-12b",
+    "file": "pytorch_model-00003-of-00003.bin",
+    "revision": "step70000",
+    "commit_sha": "aa89944fbe2abf1bf82e80aadab9000ac74250f7",
+    "blob_sha256": "e731f1d1b670e975593188ed473e6121f7d412dd9723008ac145e317a5a93464",
+    "blob_size": 4105939923
+  },
+  {
+    "repo": "EleutherAI/pythia-12b",
+    "file": "pytorch_model-00003-of-00003.bin",
+    "revision": "step100000",
+    "commit_sha": "5ef7e566438f742d2ba55bee49e34931083b8ba2",
+    "blob_sha256": "b625404aa7e3e79368b4a20e2f2498f5be3db7173e4c1cd3a2651e477fe8162e",
+    "blob_size": 4105939923
+  }
+]

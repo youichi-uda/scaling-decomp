@@ -13,9 +13,9 @@ For the word-initial vs word-continuation per-class scaling-law exponent gap (Δ
 - **D-axis at fixed N** (4 Pythia sizes, 13–14 dense checkpoints each, Bonferroni m=4): Δα<sub>D</sub> ∈ {−0.20, −0.25, −0.37, −0.45}, all 98.75 % CIs exclude zero; magnitude grows with N.
 - **N-axis at D=300 B** (7 Pythia sizes, 70M excluded as anomalous): Δα = −0.41, 95 % CI [−0.64, −0.22]; held-out RMSE improvement +0.022 nats (marginal pre-registered pass).
 - **Cross-family at D=300 B** (Pythia, Pythia-deduped, Cerebras-GPT, BLOOM): all four families Δα<0 with CIs excluding zero; magnitudes span ~3× (−0.13 to −0.41) but the sign is invariant.
-- The per-class α gap is therefore a **coordinate-dependent observable**, not an intrinsic property of the per-class prediction problem.
+- The **sign** of the per-class α gap is robust across both axes, across four families, and across shared-E floor parameterizations (`floor_robust.py`). The **magnitude** is floor-conditional (varies ~20× across shared-E sweep) and coordinate-conditional (~2× across N vs D axis within Pythia). Single-axis per-class α at one (N, D) point should not be compared cross-paper without controlling for both.
 
-Plus two **HuggingFace Hub mis-registration bugs** affecting Pythia-2.8B intermediate-step revisions and Pythia-12B step50000 (Appendix C).
+Plus two **Hub-side HuggingFace Hub mis-registration bugs** affecting Pythia-2.8B intermediate-step revisions and Pythia-12B step50000 (Appendix C). The Hub-side locus is confirmed via `x-linked-etag` HTTP headers on the `/resolve/<rev>/<filename>` endpoint, reproducible by `python3 verify_checkpoints.py`.
 
 ## Repository layout
 
@@ -46,6 +46,10 @@ bootstrap_joint_ND.py        bootstrap for the joint ADD form
 final_Naxis_perword.py       canonical N-axis fit + held-out adjudication
 final_perN_Daxis.py          canonical D-axis fits per N (this script's output is
                               final_perN_Daxis.json + final_perD_Nfit_bootstrap.json)
+floor_robust.py              shared-E sweep + shared-α F-test for the N-axis
+                              floor-slope confound (output: floor_robust.json)
+verify_checkpoints.py        Hub-side LFS audit (x-linked-etag) for the
+                              Appendix C bug claims (output: hub_blob_audit.json)
 
 v2mt_<size>.json             raw per-class per-decile measurements (Pythia 70m-12b)
 v2mt_<size>d.json            Pythia-deduped

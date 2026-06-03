@@ -105,7 +105,8 @@ weighted equally regardless of how many continuation subwords it has.
 This aggregation supersedes the token-weighted multi-token-strict
 aggregation used in earlier drafts of this work
 (Appendix~\ref{app:agg}); per-word aggregation slightly inflates the
-per-class $\alpha$ magnitude estimates and tightens their CIs.
+per-class $\alpha$ magnitude estimates (and gives a wider 95\% CI
+that still excludes zero by larger margin; Appendix~\ref{app:agg}).
 
 \paragraph{Pre-registration.} The 4/4 pre-registered N-axis criteria
 (held-out RMSE improvement $> 0.02$ nats; bootstrap 95\% CI on
@@ -241,7 +242,6 @@ per size; \citealp{merity2017wikitext}), used only for sign-consistency
 check on the N-axis.
 
 \subsection{Single-axis N scaling-law fit at fixed $D{=}300\text{B}$}
-\label{sec:nfit}
 
 We fit $L(N) = E + A \cdot N^{-\alpha}$ per class on the 7
 non-anomalous Pythia sizes $\{160\text{M}, 410\text{M}, 1\text{B},
@@ -298,7 +298,6 @@ pre-registration, adversarial-review trail, and all per-$(N, D,
 
 % =====================================================================
 \section{Results}
-\label{sec:results}
 % =====================================================================
 
 \subsection{N-axis decomposition at $D{=}300\text{B}$}
@@ -353,10 +352,42 @@ $n_N \geq 5$ to fit a power-law curve at all; the sign-direction
 diagnostic is robust to including the small-$N$ anomalous endpoint,
 whereas the headline magnitude fit is not.
 
-\paragraph{Shared-E robustness.} Forcing shared $E$ across classes
-($E \in [0, E_\mathrm{cont}]$ swept) preserves the sign of $\dalpha$
-at every sampled $E$. The per-class freedom in $E$ does not flip the
-slope conclusion.
+\paragraph{Floor-slope adjudication (post-R1 robustness).}
+In response to adversarial-review concern that the canonical
+$\dalpha = -0.41$ is conditional on $E_\mathrm{init} = 2.46$ vs
+$E_\mathrm{cont} = 0.79$ being free, we ran two adjudication tests
+(reproducible by \texttt{python3 floor\_robust.py} in the released
+repository):
+\begin{itemize}
+  \item \emph{Shared-$E$ sweep.} Fix
+        $E_\mathrm{init} = E_\mathrm{cont} = E$ across a grid in
+        $[0, 1.2 \cdot E_\mathrm{init}^\mathrm{free}]$ (12 feasible
+        values under positivity), refit $(\alpha, A)$ per class.
+        Result: $\dalpha < 0$ at every feasible $E$ (sign robust),
+        but the magnitude varies from $-0.08$ (near $E{=}0$) to
+        $-1.5$ (near $E{=}E_\mathrm{init}^\mathrm{free}$). The
+        free-fit value $-0.41$ is one point on a long
+        floor-conditional curve.
+  \item \emph{Shared-$\alpha$ $F$-test.} Compare a shared-$\alpha$
+        fit ($\alpha = 0.62$ shared, SSE $= 0.0851$, $p = 5$
+        parameters) to the free per-class fit (SSE $= 0.0546$,
+        $p = 6$) on $n_\mathrm{obs} = 14$. Result:
+        $F(1, 8) = 4.47$, two-sided $p = 0.067$. The shared-$\alpha$
+        hypothesis is \textbf{not rejected at} $\alpha_\mathrm{stat}
+        = 0.05$ on the N-axis alone; the $\alpha$-freedom premise of
+        the per-class N-axis decomposition is therefore
+        \emph{marginal} statistically.
+\end{itemize}
+The decisive evidence for per-class $\alpha$ differing is the
+$D$-axis Bonferroni-corrected result (\S\ref{sec:daxis}), where four
+independent $N$-slices each reject $\dalpha_D = 0$ at 98.75\%. The
+N-axis fit on its own (held-out RMSE $+0.022$ marginal,
+shared-$\alpha$ $F$-test $p = 0.067$) is suggestive but does not, by
+itself, cross conventional significance thresholds. We report the
+sign claim as robust to the floor parameterization across both axes;
+the magnitude $\dalpha = -0.41$ should be read as the free-fit value
+at $D{=}300\text{B}$ on the N-axis, not as a coordinate-independent
+estimate of an intrinsic per-class scaling exponent gap.
 
 All four pre-registered criteria pass: held-out RMSE improvement
 $> 0.02$ (marginal), bootstrap CI excludes 0 (decisive), sign
@@ -509,11 +540,12 @@ Cerebras and BLOOM reflect flatter $L(N)$ trajectories and, for
 BLOOM, the larger vocabulary reducing the multi-token-word sample
 within the eval corpus); the per-class \emph{difference} is the
 comparable quantity and is always negative.
-\textit{Alternative explanation for the magnitude gap.} Cerebras-GPT
-was trained at Chinchilla-optimal compute ($\approx$20 tokens per
-parameter), $\sim$5$\times$ less data than Pythia at $12\text{B}$;
-its flatter $L(N)$ and smaller $|\dalpha|$ are also consistent with
-Cerebras-GPT being on a different point of the $(N, D)$
+\textit{Alternative explanation for the magnitude gap.}
+\citet{dey2023cerebras} trained Cerebras-GPT at Chinchilla-optimal
+compute ($\approx$20 tokens per parameter), substantially less data
+than Pythia's 300\,B fixed-$D$ regime at the larger model sizes; its
+flatter $L(N)$ and smaller $|\dalpha|$ are therefore also consistent
+with Cerebras-GPT being on a different point of the $(N, D)$
 compute-optimal frontier than Pythia rather than with a genuine
 intrinsic difference. We therefore distinguish (a) coordinate
 dependence of $\dalpha$ \emph{within} a family (the Pythia D-axis
@@ -693,12 +725,16 @@ to mixture shifts.
 
 The strongest evidence for a per-class $\alpha$ gap in our data is on
 the $D$-axis at fixed $N$ (\S\ref{sec:daxis}): 4 $N$ values, all
-decisive under Bonferroni $m{=}4$, magnitude monotonic with $N$
-within the tested range. The N-axis fit at $D{=}300\text{B}$
-(\S\ref{sec:naxis}) is also decisive (CI $[-0.64, -0.22]$) but only
-with $n_N{=}7$; at smaller $D$ the $n_N{=}4$--$5$ dense data is too
-sparse to identify a per-class N-axis $\alpha$ difference
-(\S\ref{sec:perD}). Continuation predictions saturate faster with $D$
+decisive under Bonferroni $m{=}4$, magnitude rank-correlated with $N$
+across the four tested values ($\rho_\mathrm{Spearman} = +1$ on
+$n{=}4$, two-sided $p = 2/24 \approx 0.083$ under the null of
+random ordering --- suggestive but not decisive). The N-axis fit at
+$D{=}300\text{B}$ (\S\ref{sec:naxis}) has a 95\% bootstrap CI
+$[-0.64, -0.22]$ excluding zero but is only marginal under stricter
+adjudicators (held-out RMSE $+0.022$ vs $0.020$ threshold;
+shared-$\alpha$ $F$-test $p = 0.067$). At smaller $D$ the
+$n_N{=}4$--$5$ dense data is too sparse to identify a per-class
+N-axis $\alpha$ difference (\S\ref{sec:perD}). Continuation predictions saturate faster with $D$
 than initial predictions at all four tested $N$: a natural
 interpretation is that predicting subsequent subwords of a word
 (continuation) is dominated by orthographic and morphological
@@ -792,19 +828,20 @@ to disambiguate ``intrinsic-with-coordinate-correction'' from
         sweep preserves the sign of $\dalpha$ but does not pin its
         magnitude under matched floors. A profile-likelihood contour
         analysis on $(E, \alpha)$ per class is the right follow-up.
-  \item \textbf{$\acont \approx 1.0$ is consistent with Zipf-coupled
-        unigram-LM behaviour.} \citet{michaud2023quantization}
-        predicts per-class $\alpha \to 1$ when the per-class prediction
-        problem collapses to its unigram-conditioned distribution.
-        Our $\acont = 0.98$ at $D{=}300\text{B}$ and
-        $\alpha_{D,\mathrm{cont}} \in [0.77, 0.96]$ on the D-axis are
-        therefore consistent with continuation tokens being modelled
-        primarily by orthographic / morphological completion of a
-        known word (\S\ref{sec:disc}.1). A direct test --- subtracting
-        a per-class unigram log-probability from $\Lcont$ and
-        re-fitting --- would adjudicate whether the partition reduces
-        to a renamed slice of Michaud's frequency partition. We did
-        not run this test and flag it as the most important open
+  \item \textbf{$\acont \approx 1.0$ may be Zipf-coupled.}
+        \citet{michaud2023quantization} ties per-class $\alpha$ to the
+        Zipf slope of the per-class frequency distribution; for a
+        class whose targets concentrate near the unigram floor, that
+        coupling produces large $\alpha$. Our $\acont = 0.98$ at
+        $D{=}300\text{B}$ and $\alpha_{D,\mathrm{cont}} \in [0.77,
+        0.96]$ on the D-axis are consistent with continuation
+        tokens being well predicted by orthographic / morphological
+        completion of a known word (whose marginal-token distribution
+        is itself nearly unigram). A direct test --- subtracting a
+        per-class unigram log-probability from $\Lcont$ and re-fitting
+        --- would adjudicate whether our partition reduces to a
+        renamed slice of Michaud's frequency partition. We did not
+        run this test and flag it as the most important open
         question.
   \item \textbf{Per-axis projection inherits the joint
         non-identifiability} (Appendix~\ref{app:joint}). If a true
@@ -814,12 +851,15 @@ to disambiguate ``intrinsic-with-coordinate-correction'' from
         (Table~\ref{tab:daxis}) is therefore consistent with an
         $N$-axis confound rather than with a genuine $N$-dependent
         $D$-axis slope.
-  \item \textbf{Pile-10k subset size.} $\sim$200 documents
-        ($\sim$1.23M predicted tokens per model) is small. We did not
-        re-run the four-family fit on a larger sample (full Pile
-        validation, C4, or BLOOM-native ROOTS validation) and cannot
-        rule out Pile-10k subset bias as part of the cross-family
-        magnitude variation.
+  \item \textbf{Pile-10k subset size and OOD exposure.}
+        $\sim$200 documents ($\sim$1.23\,M predicted tokens per model)
+        is small. For BLOOM specifically, Pile-10k is an
+        out-of-distribution corpus (BLOOM was trained on ROOTS, a
+        multilingual corpus distinct from Pile), so the BLOOM
+        $\dalpha = -0.13$ result is doubly exposed: small evaluation
+        sample $\times$ training/evaluation distribution mismatch. We
+        did not re-run the four-family fit on a larger or
+        BLOOM-native evaluation sample.
   \item \textbf{Tokenizer-partition portability.} The word-initial /
         word-continuation partition is defined via the GPT-NeoX BPE
         leading-space marker (\texttt{\char192}). The same convention
@@ -830,27 +870,30 @@ to disambiguate ``intrinsic-with-coordinate-correction'' from
         families is not quantified in this paper; a per-family
         class-mixture table (analogous to \S\ref{sec:mixture} for
         Pythia) would be the right follow-up.
-  \item \textbf{HF Hub bug locus.} Appendix~\ref{app:hub} reports the
-        SHA256-collision and shard-truncation symptoms as observed
-        via the high-level \texttt{transformers.AutoModelForCausalLM}
-        API. We did not perform a direct
-        \texttt{git clone + git checkout step1000 + sha256sum} of the
-        underlying LFS blob, so we cannot distinguish whether the bug
-        is in the Hub's revision-to-blob mapping or in the
-        \texttt{huggingface\_hub} client resolution layer. The
-        practical advice (verify checkpoint integrity before trusting
-        intermediate-step weights) holds either way.
+  \item \textbf{Adversarial-review verifications.} In response to
+        review, we added two confirmatory artifacts now in the
+        repository: \texttt{floor\_robust.py} (the shared-$E$ sweep
+        and shared-$\alpha$ $F$-test reported in
+        \S\ref{sec:naxis}) and \texttt{verify\_checkpoints.py} (the
+        Hub-side LFS audit reported in Appendix~\ref{app:hub} via
+        \texttt{x-linked-etag} HTTP headers). The unigram-LM
+        subtraction test for the $\acont \approx 1.0$ /
+        Zipf-coupling-or-genuine-decomposition question above
+        remains the most important open follow-up we did not run.
 \end{itemize}
 
 % =====================================================================
 \section{Conclusion}
 % =====================================================================
 
-Within the Pythia family and two related-family replications, the
-per-class word-initial vs word-continuation scaling-law exponent gap
-is a coordinate-dependent observable: its magnitude varies by a
-factor of $\sim$2 across the $(N, D)$ measurement coordinates we
-sampled.
+Within the Pythia family and three related-family replications, the
+\emph{sign} of the per-class word-initial vs word-continuation
+scaling-law exponent gap is robust across both single-axis
+coordinates and four model families, but its \emph{magnitude} is
+floor-conditional on the N-axis (varies by a factor of $\sim$20
+across feasible shared-$E$ values, \S\ref{sec:naxis}) and varies by
+a factor of $\sim$2 across the $(N, D)$ measurement coordinates we
+sampled within Pythia.
 
 In our data:
 \begin{itemize}
@@ -880,16 +923,23 @@ In our data:
         floor for the smallest gain (PIQA, $+0.010$).
 \end{itemize}
 
-Two methodological recommendations follow. \textbf{First}, per-class
-scaling-law decomposition studies should report along both axes with
-multiple $(N, D)$ anchors, OR explicitly restrict claims to ``at this
-$(N, D)$.'' A single-axis report at one $(N, D)$ is a slice of a
-coordinate-dependent surface, not an estimator of a
-coordinate-independent per-class scaling rate. \textbf{Second},
-cross-paper comparison of per-class $\alpha$ values measured at
-different $(N, D)$ coordinates requires matching the measurement
-coordinate; otherwise the comparison is confounded by the coordinate
-dependence itself.
+Three methodological recommendations follow.
+\textbf{(R1) Report along both axes with multiple $(N, D)$ anchors,}
+or explicitly restrict claims to ``at this $(N, D)$.'' A single-axis
+report at one $(N, D)$ is a slice that depends on the held-axis value
+and the per-class floor parameterization.
+\textbf{(R2) Report per-class floors $E_\mathrm{init}$,
+$E_\mathrm{cont}$ alongside the $\alpha$ values}, and run a
+shared-$E$ sweep / shared-$\alpha$ $F$-test as a routine adjudicator
+of how much of $\dalpha$ depends on per-class floor freedom (our
+script \texttt{floor\_robust.py} runs both in $<$1\,s on cached
+loss values).
+\textbf{(R3) For HF Hub Pythia intermediate-step studies, audit
+\texttt{x-linked-etag} at \texttt{/resolve/<revision>/<filename>}
+before trusting any per-step result} (our
+\texttt{verify\_checkpoints.py} runs in $<$1\,s; the affected
+revisions for Pythia-2.8B and Pythia-12B are listed in
+Appendix~\ref{app:hub}).
 
 \paragraph{HuggingFace Hub reproducibility (Appendix~\ref{app:hub}).}
 Pythia-2.8B's intermediate-step \verb|model.safetensors| files have
@@ -1014,29 +1064,43 @@ consistent decompositions we can support with our data.
 \label{app:hub}
 % =====================================================================
 
-During this work we identified two classes of HF Hub metadata
-corruption affecting Pythia intermediate-step checkpoints.
+During this work we identified two classes of HuggingFace Hub
+metadata corruption affecting Pythia intermediate-step checkpoints.
+All SHA256 hashes and sizes in this appendix are the values reported
+by the Hub itself in the \texttt{x-linked-etag} and
+\texttt{x-linked-size} HTTP response headers of the
+\texttt{/resolve/<revision>/<filename>} endpoint, which are
+server-side metadata --- they reflect the LFS blob the Hub maps each
+revision to, independent of the \texttt{transformers} or
+\texttt{huggingface\_hub} client resolution layer. The bug locus is
+therefore \textbf{Hub-side}, not client-side. The full audit (3
+files $\times$ 8 revisions) is reproducible by
+\texttt{python3 verify\_checkpoints.py} in the released repository,
+with the JSON output committed as \texttt{hub\_blob\_audit.json}.
 
 \subsection{Pythia-2.8B \texttt{model.safetensors} mis-registration}
 
 For the \verb|EleutherAI/pythia-2.8b| repository, the
-\verb|model.safetensors| file at multiple early intermediate-step
-revisions has SHA256 hashes identical to the \verb|main| revision's:
+\verb|model.safetensors| file at multiple intermediate-step revisions
+has LFS blob SHA256 hashes identical to \verb|main|'s, despite
+distinct Git commit SHAs at each revision (proving the Hub itself,
+not the client, is mapping these revisions to the
+main-weights blob):
 
 \begin{center}
 \small
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 \toprule
-revision   & safetensors SHA256[:16] & \texttt{pytorch\_model.bin} SHA256[:16] \\
+revision   & commit SHA[:12]  & safetensors LFS SHA256[:16] & \texttt{pytorch\_model.bin} LFS SHA256[:16] \\
 \midrule
-\texttt{main}        & \texttt{ab496f1c3fd79e3c} & \texttt{36f0f93d1f5d44ca} \\
-\texttt{step1000}    & \texttt{ab496f1c3fd79e3c} & \texttt{36f0f93d1f5d44ca} (= main) \\
-\texttt{step2000}    & \texttt{ab496f1c3fd79e3c} & \texttt{36f0f93d1f5d44ca} (= main) \\
-\texttt{step4000}    & \texttt{ab496f1c3fd79e3c} & \texttt{36f0f93d1f5d44ca} (= main) \\
-\texttt{step10000}   & \texttt{ab496f1c3fd79e3c} & \texttt{36f0f93d1f5d44ca} (= main) \\
-\texttt{step50000}   & \texttt{ab496f1c3fd79e3c} (= main, still wrong) & \texttt{73468bb90e734f88} \\
-\texttt{step100000}  & \texttt{ab496f1c3fd79e3c} (= main, still wrong) & \texttt{ced5e41d87bf8470} \\
-\texttt{step143000}  & \texttt{462f2b960062159c} & \texttt{a294bfcf6ff2c091} \\
+\texttt{main}        & \texttt{2a259cdd96a4} & \texttt{ab496f1c3fd79e3c} & \texttt{36f0f93d1f5d44ca} \\
+\texttt{step1000}    & \texttt{cc81f94ea2ac} & \texttt{ab496f1c3fd79e3c} (= main) & \texttt{36f0f93d1f5d44ca} (= main) \\
+\texttt{step2000}    & \texttt{7378edcedb6f} & \texttt{ab496f1c3fd79e3c} (= main) & \texttt{36f0f93d1f5d44ca} (= main) \\
+\texttt{step4000}    & \texttt{494474bbd952} & \texttt{ab496f1c3fd79e3c} (= main) & \texttt{36f0f93d1f5d44ca} (= main) \\
+\texttt{step10000}   & \texttt{835c7474e203} & \texttt{ab496f1c3fd79e3c} (= main) & \texttt{36f0f93d1f5d44ca} (= main) \\
+\texttt{step50000}   & \texttt{1936c7c29530} & \texttt{ab496f1c3fd79e3c} (= main, still wrong) & \texttt{73468bb90e734f88} \\
+\texttt{step100000}  & \texttt{668bcb3f3a13} & \texttt{ab496f1c3fd79e3c} (= main, still wrong) & \texttt{ced5e41d87bf8470} \\
+\texttt{step143000}  & \texttt{dbe7ae300a54} & \texttt{462f2b960062159c} & \texttt{a294bfcf6ff2c091} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1060,18 +1124,21 @@ for the N-axis fit and cross-family analysis.
 
 For the \verb|EleutherAI/pythia-12b| repository, the
 \verb|pytorch_model-00003-of-00003.bin| file at revision step50000
-has size $3.9\,\mathrm{GB}$ compared to $\sim 4.1\,\mathrm{GB}$ at
-neighboring revisions:
+has Hub-reported size $3{,}896{,}183{,}087$ bytes ($\sim$3.9\,GB)
+compared to $4{,}105{,}939{,}923$ bytes ($\sim$4.1\,GB) at neighbouring
+revisions ($\sim$5.1\% under-size, $\sim$200\,MB missing):
 
 \begin{center}
 \small
-\begin{tabular}{lllll}
+\begin{tabular}{llrl}
 \toprule
-revision   & shard-1 SHA[:16]   & shard-2 SHA[:16]   & shard-3 SHA[:16]   & shard-3 size \\
+revision   & shard-3 LFS SHA[:16]   & shard-3 size (bytes) & note \\
 \midrule
-\texttt{main}        & \texttt{9d21715462588073} & \texttt{4ce3319dbdf23e96} & \texttt{eb82155af2c813a9} & $4{,}105{,}939{,}923$ \\
-\texttt{step50000}   & \texttt{9d21715462588073} & \texttt{4ce3319dbdf23e96} & \texttt{7df63b4231856f55} & $3{,}896{,}183{,}087$ (truncated) \\
-\texttt{step100000}  & \texttt{a02cfd5026653f2f} & \texttt{5585d27082866868} & \texttt{b625404aa7e3e793} & $4{,}105{,}939{,}923$ \\
+\texttt{main}        & \texttt{eb82155af2c813a9} & $4{,}105{,}939{,}923$ & \\
+\texttt{step42000}   & \texttt{541de6140dc4213c} & $4{,}105{,}939{,}923$ & \\
+\texttt{step50000}   & \texttt{7df63b4231856f55} & $3{,}896{,}183{,}087$ & truncated \\
+\texttt{step70000}   & \texttt{e731f1d1b670e975} & $4{,}105{,}939{,}923$ & \\
+\texttt{step100000}  & \texttt{b625404aa7e3e793} & $4{,}105{,}939{,}923$ & \\
 \bottomrule
 \end{tabular}
 \end{center}

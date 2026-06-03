@@ -52,7 +52,8 @@ larger at larger $N$ within our tested range. \textbf{(ii) N-axis at
 fixed $D{=}300\text{B}$}, 7 Pythia sizes 160M--12B, per-word
 aggregation: $\ainit{=}0.56$, $\acont{=}0.98$, $\dalpha{=}-0.41$, 95\%
 bootstrap CI $[-0.64, -0.22]$; held-out RMSE improvement
-$+0.022$~nats (marginal pre-registered pass). \textbf{(iii)
+$+0.022$~nats (marginal pre-registered pass; shared-$\alpha$
+$F$-test $p = 0.067$ also marginal --- see \S\ref{sec:naxis}). \textbf{(iii)
 Cross-family replication at $D{=}300\text{B}$} on Pythia, Pythia-deduped,
 Cerebras-GPT, and BLOOM (spanning 3 BPE tokenizers and English vs
 multilingual data): all four families show $\dalpha < 0$ with 95\% CIs
@@ -270,6 +271,7 @@ metadata corruption of its intermediate-step model files
 reason (shard-3 truncation).
 
 \subsection{Bootstrap}
+\label{sec:bootstrap}
 
 Per-axis fits use parametric residual bootstrap: resample residuals
 of the per-class power-law fit ($B = 2000$ iterations, seed
@@ -357,7 +359,8 @@ In response to adversarial-review concern that the canonical
 $\dalpha = -0.41$ is conditional on $E_\mathrm{init} = 2.46$ vs
 $E_\mathrm{cont} = 0.79$ being free, we ran two adjudication tests
 (reproducible by \texttt{python3 floor\_robust.py} in the released
-repository):
+repository; full numerical output committed as
+\texttt{floor\_robust.json}):
 \begin{itemize}
   \item \emph{Shared-$E$ sweep.} Fix
         $E_\mathrm{init} = E_\mathrm{cont} = E$ across a grid in
@@ -372,11 +375,14 @@ repository):
         fit ($\alpha = 0.62$ shared, SSE $= 0.0851$, $p = 5$
         parameters) to the free per-class fit (SSE $= 0.0546$,
         $p = 6$) on $n_\mathrm{obs} = 14$. Result:
-        $F(1, 8) = 4.47$, two-sided $p = 0.067$. The shared-$\alpha$
-        hypothesis is \textbf{not rejected at} $\alpha_\mathrm{stat}
-        = 0.05$ on the N-axis alone; the $\alpha$-freedom premise of
-        the per-class N-axis decomposition is therefore
-        \emph{marginal} statistically.
+        $F(1, 8) = 4.47$, two-sided $p = 0.067$ (the $F$ reference
+        distribution assumes Gaussian residuals, which at
+        $n_\mathrm{obs} = 14$ is asymptotic; we report this with the
+        same caveat as the residual bootstrap in \S\ref{sec:bootstrap}).
+        The shared-$\alpha$ hypothesis is \textbf{not rejected at}
+        $\alpha_\mathrm{stat} = 0.05$ on the N-axis alone; the
+        $\alpha$-freedom premise of the per-class N-axis decomposition
+        is therefore \emph{marginal} statistically.
 \end{itemize}
 The decisive evidence for per-class $\alpha$ differing is the
 $D$-axis Bonferroni-corrected result (\S\ref{sec:daxis}), where four
@@ -903,10 +909,12 @@ In our data:
         rank-correlation of $|\dalpha_D|$ with $N$ ($\rho{=}+1$ on
         $n{=}4$) is suggestive but not decisive.
   \item \textbf{N-axis at $D{=}300\text{B}$}: $\dalpha = -0.41$ with
-        95\% CI $[-0.64, -0.22]$; held-out RMSE improvement
-        $+0.022$~nats is a marginal pre-registered pass
-        ($0.022$~nats vs $0.020$~nats threshold). Sign-consistent CIs
-        in three additional families --- Pythia-deduped ($-0.28$),
+        95\% CI $[-0.64, -0.22]$; both stricter adjudicators are
+        marginal --- held-out RMSE improvement $+0.022$~nats vs
+        pre-registered $0.020$~nats threshold; shared-$\alpha$
+        $F$-test $F(1,8) = 4.47$, $p = 0.067$ (not rejected at
+        $\alpha_\mathrm{stat} = 0.05$). Sign-consistent CIs in three
+        additional families --- Pythia-deduped ($-0.28$),
         Cerebras-GPT ($-0.20$), and BLOOM ($-0.13$).
   \item \textbf{Per-D N-axis} at $D < 300\text{B}$ is non-identifiable
         in our data ($n_N = 4$--$5$ too sparse for the bootstrap to

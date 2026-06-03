@@ -94,10 +94,14 @@ BLOOM checkpoints, see `measure_v2.py` and the per-family driver scripts under
 `runpod_*.sh`. Note the HuggingFace Hub mis-registration bugs documented in
 Appendix C of the paper — `use_safetensors=False` is required for some
 Pythia-2.8B revisions, and Pythia-12B step50000 returns NaN losses via the
-standard `transformers` API. Whether the bug is in the Hub's revision-to-blob
-mapping or in `huggingface_hub`'s client resolution layer is not adjudicated
-here — see the paper's Limitations and Appendix C.3 for the verification
-ladder we recommend any user run before trusting intermediate-step weights.
+standard `transformers` API. The bug locus is **Hub-side** (server-side LFS
+blob mapping), confirmed via `python3 verify_checkpoints.py` which queries
+the `x-linked-etag` HTTP header on the Hub `/resolve/<rev>/<filename>`
+endpoint (server-side metadata, independent of the `transformers` or
+`huggingface_hub` client resolution layer). The full audit (3 files × 8
+revisions) is frozen in `hub_blob_audit.json`. See Appendix C.3 for the
+verification ladder we recommend any user run before trusting
+intermediate-step weights.
 
 ## Pre-registration
 

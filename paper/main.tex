@@ -58,19 +58,34 @@ Cross-family replication at $D{=}300\text{B}$} on Pythia, Pythia-deduped,
 Cerebras-GPT, and BLOOM (spanning 3 BPE tokenizers and English vs
 multilingual data): all four families show $\dalpha < 0$ with 95\% CIs
 excluding zero; magnitudes span $\sim$3$\times$ ($-0.13$ to $-0.41$),
-the sign is invariant, the magnitude is not. \textbf{(iv) Per-D
-N-axis fits} are identifiable only at $D{=}300\text{B}$ (n${=}$7) and
-non-identifiable at smaller $D$ (n${=}$4--5); we report this rather
-than over-claiming. Within our tested grid, single-axis per-class
+the sign is invariant, the magnitude is not. \textbf{(iv) Per-decile
+adjudication of the Michaud / Zipf-coupling alternative explanation}
+shows that per-class $\alpha$ rises monotonically with token-frequency
+decile in both classes ($\rho_\mathrm{Spearman} = +0.98$,
+$p < 0.0001$, confirming Michaud); within-decile per-class
+$\dalpha(d) \approx -0.19$ median, negative in all 9 feasible deciles,
+CI excluding zero in the densest mid-band 4 deciles. Approximately
+one-half of the free-fit $\dalpha = -0.41$ is between-decile Zipf
+coupling and one-half is within-decile per-class structure.
+\textbf{(v) Per-D N-axis fits} are identifiable only at $D{=}300\text{B}$
+(n${=}$7) and non-identifiable at smaller $D$ (n${=}$4--5); we report
+this rather than over-claiming. Within our tested grid, single-axis per-class
 $\alpha$ varies by a factor of $\sim$2 depending on whether $N$ or $D$
-is the varied axis and on the operating point of the held axis. The
-empirical $(N, D)$ surface is only sampled densely at the
-$D{=}300\text{B}$ column (both axes identifiable simultaneously) and
-along four $N$-slices on the $D$-axis; we are not able to fit a joint
-$L_c(N, D)$ surface (Appendix~\ref{app:joint}). The headline takeaway
-is therefore that cross-paper comparison of per-class $\alpha$ values
-measured at different $(N, D)$ coordinates is not, in general, an
-apples-to-apples comparison. We also flag two HuggingFace Hub
+is the varied axis and on the operating point of the held axis. Per-decile
+adjudication of the Michaud / Zipf-coupling alternative explanation
+shows that approximately one-half of the free-fit
+$\dalpha = -0.41$ at $D{=}300\text{B}$ is between-decile composition
+(the Zipf-coupling component) and approximately one-half is
+within-decile per-class structure
+($\dalpha(d) \approx -0.19$ median, negative sign in all 9 deciles).
+The empirical $(N, D)$ surface is only sampled densely at the
+$D{=}300\text{B}$ column and along four $N$-slices on the $D$-axis;
+we are not able to fit a joint $L_c(N, D)$ surface
+(Appendix~\ref{app:joint}). The headline takeaway is that cross-paper
+comparison of per-class $\alpha$ values measured at different
+$(N, D)$ coordinates --- or without conditioning on the prediction
+frequency distribution --- is not, in general, an apples-to-apples
+comparison. We also flag two HuggingFace Hub
 mis-registration bugs found during this work
 (Appendix~\ref{app:hub}); we report what we observed via the
 high-level \texttt{transformers} API and acknowledge that ruling out
@@ -394,6 +409,53 @@ sign claim as robust to the floor parameterization across both axes;
 the magnitude $\dalpha = -0.41$ should be read as the free-fit value
 at $D{=}300\text{B}$ on the N-axis, not as a coordinate-independent
 estimate of an intrinsic per-class scaling exponent gap.
+
+\paragraph{Zipf-coupling adjudication (Michaud confound).}
+\citet{michaud2023quantization} predicts that per-class $\alpha$ is
+proportional to the Zipf slope of the class's prediction-frequency
+distribution. To test whether the global $\dalpha = -0.41$ is
+explained by class-by-frequency-decile mixture composition (rather
+than by independent per-class structure), we ran per-decile per-class
+fits on the 7 Pythia sizes (\texttt{unigram\_test.py};
+\texttt{unigram\_test.json}). For each of the 9 feasible
+token-frequency deciles (decile 9 has zero word-continuation tokens
+and is excluded), we fit $\alpha_\mathrm{init}(d)$, $\alpha_\mathrm{cont}(d)$ separately and
+report $\dalpha(d) = \alpha_\mathrm{init}(d) - \alpha_\mathrm{cont}(d)$ with parametric
+residual bootstrap CIs.
+
+\textit{Michaud sanity test (pre-registered prediction).}
+$\alpha_\mathrm{init}(d)$ rises monotonically across deciles from
+$\alpha_\mathrm{init}(d{=}0) = 0.46$ at the rarest tokens to
+$\alpha_\mathrm{init}(d{=}8) = 0.92$ at the most common
+($\rho_\mathrm{Spearman} = +0.98$, $p < 0.0001$). Similarly for
+continuation: $\alpha_\mathrm{cont}(d{=}0) = 0.60$ to $\alpha_\mathrm{cont}(d{=}8) = 1.25$
+($\rho = +0.98$, $p < 0.0001$). \textbf{Michaud's
+frequency-coupling prediction is confirmed within our data}: per-class
+$\alpha$ does grow with the decile's frequency band, in both classes.
+
+\textit{Within-decile per-class gap (the residual after controlling
+for the Michaud confound).} The per-decile $\dalpha(d)$ values are
+$\{-0.14, -0.18, -0.19, -0.21, -0.22, -0.24, -0.15, -0.05, -0.33\}$
+for $d \in \{0, \ldots, 8\}$, with median $-0.19$ and mean $-0.19$.
+\textbf{All 9 deciles show $\dalpha(d) < 0$} (zero positive sign
+flips); 4 of 9 have parametric-bootstrap 95\% CIs excluding zero
+(deciles 2--5, the densest mid-band). The within-decile per-class
+gap is therefore real (sign-robust across the full frequency range)
+but its magnitude ($-0.19$) is \textbf{less than half} the global
+free-fit value ($-0.41$). Approximately one-half of the global
+headline gap is attributable to class-by-decile mixture composition
+(the Michaud / Zipf-coupling component) and approximately one-half
+is independent within-decile per-class structure.
+
+\textit{What survives.} (a) The \emph{sign} of $\dalpha$ is robust:
+to free vs shared per-class floor (above), and to controlling for
+token-frequency-decile (here). (b) The \emph{magnitude} of the
+free-fit $\dalpha = -0.41$ should be read as a composite of
+Zipf-coupling ($\sim$$0.22$ nats) and within-decile per-class
+structure ($\sim$$0.19$ nats). (c) A per-class decomposition study
+that reports a single $\dalpha$ value without conditioning on the
+prediction-frequency distribution is reporting the composite, not the
+independent component.
 
 All four pre-registered criteria pass: held-out RMSE improvement
 $> 0.02$ (marginal), bootstrap CI excludes 0 (decisive), sign
@@ -834,21 +896,23 @@ to disambiguate ``intrinsic-with-coordinate-correction'' from
         sweep preserves the sign of $\dalpha$ but does not pin its
         magnitude under matched floors. A profile-likelihood contour
         analysis on $(E, \alpha)$ per class is the right follow-up.
-  \item \textbf{$\acont \approx 1.0$ may be Zipf-coupled.}
-        \citet{michaud2023quantization} ties per-class $\alpha$ to the
-        Zipf slope of the per-class frequency distribution; for a
-        class whose targets concentrate near the unigram floor, that
-        coupling produces large $\alpha$. Our $\acont = 0.98$ at
-        $D{=}300\text{B}$ and $\alpha_{D,\mathrm{cont}} \in [0.77,
-        0.96]$ on the D-axis are consistent with continuation
-        tokens being well predicted by orthographic / morphological
-        completion of a known word (whose marginal-token distribution
-        is itself nearly unigram). A direct test --- subtracting a
-        per-class unigram log-probability from $\Lcont$ and re-fitting
-        --- would adjudicate whether our partition reduces to a
-        renamed slice of Michaud's frequency partition. We did not
-        run this test and flag it as the most important open
-        question.
+  \item \textbf{$\acont \approx 1.0$ is partly Zipf-coupled.} Adversarial
+        review (Persona A R1-R3) flagged that
+        \citet{michaud2023quantization}'s frequency-coupling prediction
+        could rename our partition as a slice of Michaud's. We
+        adjudicated this via per-decile per-class fits
+        (\S\ref{sec:naxis} ``Zipf-coupling adjudication'';
+        \texttt{unigram\_test.py}): Michaud's prediction is confirmed
+        ($\alpha$ rises monotonically with decile frequency band,
+        $\rho_\mathrm{Spearman} = +0.98$ in both classes), and
+        $\sim$1/2 of the free-fit $\dalpha = -0.41$ is attributable
+        to between-decile composition (the Zipf-coupling component).
+        Importantly, the within-decile per-class gap is still
+        $\dalpha \approx -0.19$ (sign negative in all 9 feasible
+        deciles, CI excluding zero in 4 of 9), so the per-class
+        structure is \emph{not} reducible to the Zipf coupling alone.
+        Reporting both components separately is the right unit of
+        analysis.
   \item \textbf{Per-axis projection inherits the joint
         non-identifiability} (Appendix~\ref{app:joint}). If a true
         joint $L(N, D)$ is Hoffmann-additive, the per-$N$ $D$-slice
@@ -877,15 +941,17 @@ to disambiguate ``intrinsic-with-coordinate-correction'' from
         class-mixture table (analogous to \S\ref{sec:mixture} for
         Pythia) would be the right follow-up.
   \item \textbf{Adversarial-review verifications.} In response to
-        review, we added two confirmatory artifacts now in the
-        repository: \texttt{floor\_robust.py} (the shared-$E$ sweep
-        and shared-$\alpha$ $F$-test reported in
-        \S\ref{sec:naxis}) and \texttt{verify\_checkpoints.py} (the
-        Hub-side LFS audit reported in Appendix~\ref{app:hub} via
-        \texttt{x-linked-etag} HTTP headers). The unigram-LM
-        subtraction test for the $\acont \approx 1.0$ /
-        Zipf-coupling-or-genuine-decomposition question above
-        remains the most important open follow-up we did not run.
+        review, three confirmatory artifacts are now in the
+        repository: \texttt{floor\_robust.py} (shared-$E$ sweep +
+        shared-$\alpha$ $F$-test, \S\ref{sec:naxis}),
+        \texttt{verify\_checkpoints.py} (Hub-side LFS audit via
+        \texttt{x-linked-etag} HTTP headers, Appendix~\ref{app:hub}),
+        and \texttt{unigram\_test.py} (per-decile per-class
+        adjudication of the Michaud / Zipf-coupling alternative
+        explanation, \S\ref{sec:naxis} ``Zipf-coupling
+        adjudication''). All three confirm the sign claim is robust
+        and respectively quantify the floor, locus, and Zipf-coupling
+        contributions to the headline magnitude.
 \end{itemize}
 
 % =====================================================================
@@ -895,11 +961,15 @@ to disambiguate ``intrinsic-with-coordinate-correction'' from
 Within the Pythia family and three related-family replications, the
 \emph{sign} of the per-class word-initial vs word-continuation
 scaling-law exponent gap is robust across both single-axis
-coordinates and four model families, but its \emph{magnitude} is
-floor-conditional on the N-axis (varies by a factor of $\sim$20
-across feasible shared-$E$ values, \S\ref{sec:naxis}) and varies by
-a factor of $\sim$2 across the $(N, D)$ measurement coordinates we
-sampled within Pythia.
+coordinates, across four model families, and across all 9 feasible
+token-frequency deciles (\S\ref{sec:naxis} ``Zipf-coupling
+adjudication''). Its \emph{magnitude} is floor-conditional on the
+N-axis (varies $\sim$20$\times$ across feasible shared-$E$ values),
+varies $\sim$2$\times$ across the $(N, D)$ measurement coordinates,
+and decomposes into two roughly equal parts at $D{=}300\text{B}$:
+$\sim$1/2 between-decile Zipf coupling (predicted by
+\citealp{michaud2023quantization}) and $\sim$1/2 within-decile
+per-class structure ($\dalpha(d) \approx -0.19$ median).
 
 In our data:
 \begin{itemize}
@@ -937,11 +1007,13 @@ or explicitly restrict claims to ``at this $(N, D)$.'' A single-axis
 report at one $(N, D)$ is a slice that depends on the held-axis value
 and the per-class floor parameterization.
 \textbf{(R2) Report per-class floors $E_\mathrm{init}$,
-$E_\mathrm{cont}$ alongside the $\alpha$ values}, and run a
-shared-$E$ sweep / shared-$\alpha$ $F$-test as a routine adjudicator
-of how much of $\dalpha$ depends on per-class floor freedom (our
-script \texttt{floor\_robust.py} runs both in $<$1\,s on cached
-loss values).
+$E_\mathrm{cont}$ and the per-decile decomposition alongside the
+$\alpha$ values}, and run a shared-$E$ sweep, shared-$\alpha$
+$F$-test, and per-decile per-class fit as routine adjudicators of how
+much of $\dalpha$ depends on per-class floor freedom and on
+Zipf-coupling composition (our scripts \texttt{floor\_robust.py} and
+\texttt{unigram\_test.py} together run in $<$30\,s on cached loss
+values).
 \textbf{(R3) For HF Hub Pythia intermediate-step studies, audit
 \texttt{x-linked-etag} at \texttt{/resolve/<revision>/<filename>}
 before trusting any per-step result} (our

@@ -13,7 +13,7 @@ For the word-initial vs word-continuation per-class scaling-law exponent gap (Δ
 - **D-axis at fixed N** (4 Pythia sizes, 13–14 dense checkpoints each, Bonferroni m=4): Δα<sub>D</sub> ∈ {−0.20, −0.25, −0.37, −0.45}, all 98.75 % CIs exclude zero; magnitude grows with N.
 - **N-axis at D=300 B** (7 Pythia sizes, 70M excluded as anomalous): Δα = −0.41, 95 % CI [−0.64, −0.22]; held-out RMSE improvement +0.022 nats (marginal pre-registered pass).
 - **Cross-family at D=300 B** (Pythia, Pythia-deduped, Cerebras-GPT, BLOOM): all four families Δα<0 with CIs excluding zero; magnitudes span ~3× (−0.13 to −0.41) but the sign is invariant.
-- The **sign** of the per-class α gap is robust across both axes, across four families, and across shared-E floor parameterizations (`floor_robust.py`). The **magnitude** is floor-conditional (varies ~20× across shared-E sweep) and coordinate-conditional (~2× across N vs D axis within Pythia). Single-axis per-class α at one (N, D) point should not be compared cross-paper without controlling for both.
+- The **sign** of the per-class α gap is robust across both axes, four families, shared-E floor parameterizations (`floor_robust.py`), AND all 9 feasible token-frequency deciles (`unigram_test.py`). The **magnitude** is floor-conditional (varies ~20× across shared-E sweep) and coordinate-conditional (~2× across N vs D axis within Pythia). At D=300B the free-fit Δα = -0.41 decomposes into ~1/2 between-decile Zipf coupling (Michaud 2023 confirmed: ρ_Spearman = +0.98 with decile frequency) and ~1/2 within-decile per-class structure (Δα(d) ≈ -0.19 median). Single-axis per-class α at one (N, D) point should not be compared cross-paper without controlling for both axes AND for the decile composition.
 
 Plus two **Hub-side HuggingFace Hub mis-registration bugs** affecting Pythia-2.8B intermediate-step revisions and Pythia-12B step50000 (Appendix C). The Hub-side locus is confirmed via `x-linked-etag` HTTP headers on the `/resolve/<rev>/<filename>` endpoint, reproducible by `python3 verify_checkpoints.py`.
 
@@ -48,6 +48,9 @@ final_perN_Daxis.py          canonical D-axis fits per N (this script's output i
                               final_perN_Daxis.json + final_perD_Nfit_bootstrap.json)
 floor_robust.py              shared-E sweep + shared-α F-test for the N-axis
                               floor-slope confound (output: floor_robust.json)
+unigram_test.py              per-decile per-class fit adjudicating the
+                              Michaud Zipf-coupling alternative explanation
+                              (output: unigram_test.json)
 verify_checkpoints.py        Hub-side LFS audit (x-linked-etag) for the
                               Appendix C bug claims (output: hub_blob_audit.json)
 

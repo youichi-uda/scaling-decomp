@@ -1,0 +1,692 @@
+{
+  "model": "EleutherAI/pythia-1.4b",
+  "n_pred_tokens": 136059,
+  "overall_mean_loss": 2.6559255123138428,
+  "by_position": {
+    "word_initial": {
+      "n": 96557,
+      "mean_loss": 3.0815587043762207
+    },
+    "word_continuation": {
+      "n": 15037,
+      "mean_loss": 0.7119471430778503
+    },
+    "other": {
+      "n": 24465,
+      "mean_loss": 2.1708948612213135
+    }
+  },
+  "by_depth": {
+    "0_initial": {
+      "n": 96557,
+      "mean_loss": 3.0815587043762207
+    },
+    "1": {
+      "n": 10721,
+      "mean_loss": 0.7808659076690674
+    },
+    "2": {
+      "n": 3219,
+      "mean_loss": 0.5175912380218506
+    },
+    "3plus": {
+      "n": 1097,
+      "mean_loss": 0.6087135672569275
+    }
+  },
+  "by_seqband_position": {
+    "early_lt128": {
+      "word_initial": {
+        "n": 12176,
+        "mean_loss": 3.5797078609466553
+      },
+      "word_continuation": {
+        "n": 1879,
+        "mean_loss": 1.1343615055084229
+      }
+    },
+    "mid": {
+      "word_initial": {
+        "n": 60167,
+        "mean_loss": 3.0266056060791016
+      },
+      "word_continuation": {
+        "n": 9532,
+        "mean_loss": 0.6697671413421631
+      }
+    },
+    "late": {
+      "word_initial": {
+        "n": 24214,
+        "mean_loss": 2.9676122665405273
+      },
+      "word_continuation": {
+        "n": 3626,
+        "mean_loss": 0.6039333343505859
+      }
+    }
+  },
+  "by_freqdecile_position": {
+    "0": {
+      "freq_range": [
+        1.0,
+        3.0
+      ],
+      "word_initial": {
+        "n": 7332,
+        "mean_loss": 5.598165035247803
+      },
+      "word_continuation": {
+        "n": 2086,
+        "mean_loss": 1.3990519046783447
+      }
+    },
+    "1": {
+      "freq_range": [
+        3.0,
+        7.0
+      ],
+      "word_initial": {
+        "n": 10347,
+        "mean_loss": 4.574023723602295
+      },
+      "word_continuation": {
+        "n": 2436,
+        "mean_loss": 0.9414533376693726
+      }
+    },
+    "2": {
+      "freq_range": [
+        7.0,
+        12.0
+      ],
+      "word_initial": {
+        "n": 8445,
+        "mean_loss": 4.0566182136535645
+      },
+      "word_continuation": {
+        "n": 1891,
+        "mean_loss": 0.7214537262916565
+      }
+    },
+    "3": {
+      "freq_range": [
+        12.0,
+        22.0
+      ],
+      "word_initial": {
+        "n": 9467,
+        "mean_loss": 3.727942705154419
+      },
+      "word_continuation": {
+        "n": 1992,
+        "mean_loss": 0.660106360912323
+      }
+    },
+    "4": {
+      "freq_range": [
+        22.0,
+        40.0
+      ],
+      "word_initial": {
+        "n": 9181,
+        "mean_loss": 3.384291887283325
+      },
+      "word_continuation": {
+        "n": 2140,
+        "mean_loss": 0.6081697940826416
+      }
+    },
+    "5": {
+      "freq_range": [
+        40.0,
+        88.0
+      ],
+      "word_initial": {
+        "n": 9550,
+        "mean_loss": 3.1439127922058105
+      },
+      "word_continuation": {
+        "n": 2067,
+        "mean_loss": 0.4230242967605591
+      }
+    },
+    "6": {
+      "freq_range": [
+        88.0,
+        260.0
+      ],
+      "word_initial": {
+        "n": 9452,
+        "mean_loss": 2.701657295227051
+      },
+      "word_continuation": {
+        "n": 1479,
+        "mean_loss": 0.30562472343444824
+      }
+    },
+    "7": {
+      "freq_range": [
+        260.0,
+        1014.0
+      ],
+      "word_initial": {
+        "n": 10228,
+        "mean_loss": 1.9758762121200562
+      },
+      "word_continuation": {
+        "n": 946,
+        "mean_loss": 0.19730594754219055
+      }
+    },
+    "8": {
+      "freq_range": [
+        1014.0,
+        2957.0
+      ],
+      "word_initial": {
+        "n": 9774,
+        "mean_loss": 1.7997722625732422
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    },
+    "9": {
+      "freq_range": [
+        2957.0,
+        6501.0
+      ],
+      "word_initial": {
+        "n": 12781,
+        "mean_loss": 1.1885199546813965
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    }
+  },
+  "by_wordfreqdecile_position": {
+    "0": {
+      "wordfreq_range": [
+        1.0,
+        1.0
+      ],
+      "word_initial": {
+        "n": 0,
+        "mean_loss": null
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    },
+    "1": {
+      "wordfreq_range": [
+        1.0,
+        3.0
+      ],
+      "word_initial": {
+        "n": 10991,
+        "mean_loss": 5.507701873779297
+      },
+      "word_continuation": {
+        "n": 7357,
+        "mean_loss": 1.0823050737380981
+      }
+    },
+    "2": {
+      "wordfreq_range": [
+        3.0,
+        7.0
+      ],
+      "word_initial": {
+        "n": 10813,
+        "mean_loss": 4.390413761138916
+      },
+      "word_continuation": {
+        "n": 3059,
+        "mean_loss": 0.5259790420532227
+      }
+    },
+    "3": {
+      "wordfreq_range": [
+        7.0,
+        14.0
+      ],
+      "word_initial": {
+        "n": 9954,
+        "mean_loss": 3.7677791118621826
+      },
+      "word_continuation": {
+        "n": 1370,
+        "mean_loss": 0.35647282004356384
+      }
+    },
+    "4": {
+      "wordfreq_range": [
+        14.0,
+        29.0
+      ],
+      "word_initial": {
+        "n": 10742,
+        "mean_loss": 3.5220577716827393
+      },
+      "word_continuation": {
+        "n": 902,
+        "mean_loss": 0.2869472801685333
+      }
+    },
+    "5": {
+      "wordfreq_range": [
+        29.0,
+        69.0
+      ],
+      "word_initial": {
+        "n": 10787,
+        "mean_loss": 3.1194369792938232
+      },
+      "word_continuation": {
+        "n": 961,
+        "mean_loss": 0.2562568187713623
+      }
+    },
+    "6": {
+      "wordfreq_range": [
+        69.0,
+        257.0
+      ],
+      "word_initial": {
+        "n": 10303,
+        "mean_loss": 2.6772289276123047
+      },
+      "word_continuation": {
+        "n": 626,
+        "mean_loss": 0.09036605060100555
+      }
+    },
+    "7": {
+      "wordfreq_range": [
+        257.0,
+        1007.0
+      ],
+      "word_initial": {
+        "n": 10438,
+        "mean_loss": 1.9455527067184448
+      },
+      "word_continuation": {
+        "n": 762,
+        "mean_loss": 0.11028165370225906
+      }
+    },
+    "8": {
+      "wordfreq_range": [
+        1007.0,
+        2956.0
+      ],
+      "word_initial": {
+        "n": 9751,
+        "mean_loss": 1.792966365814209
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    },
+    "9": {
+      "wordfreq_range": [
+        2956.0,
+        6499.0
+      ],
+      "word_initial": {
+        "n": 12778,
+        "mean_loss": 1.1876040697097778
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    }
+  },
+  "by_position_multitokenonly": {
+    "word_initial": {
+      "n": 10112,
+      "mean_loss": 4.693221092224121
+    },
+    "word_continuation": {
+      "n": 15037,
+      "mean_loss": 0.7119471430778503
+    }
+  },
+  "by_wordlen_position": {
+    "len2_init": {
+      "n": 6847,
+      "mean_loss": 4.653509140014648
+    },
+    "len2_cont": {
+      "n": 7553,
+      "mean_loss": 0.595489501953125
+    },
+    "len3_init": {
+      "n": 2437,
+      "mean_loss": 4.834719657897949
+    },
+    "len3_cont": {
+      "n": 4790,
+      "mean_loss": 0.7949961423873901
+    },
+    "len4plus_init": {
+      "n": 828,
+      "mean_loss": 4.605147838592529
+    },
+    "len4plus_cont": {
+      "n": 2694,
+      "mean_loss": 0.8907884955406189
+    }
+  },
+  "by_wordfreqdecile_position_multitokenonly": {
+    "0": {
+      "wordfreq_range": [
+        1.0,
+        1.0
+      ],
+      "word_initial": {
+        "n": 0,
+        "mean_loss": null
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    },
+    "1": {
+      "wordfreq_range": [
+        1.0,
+        1.0
+      ],
+      "word_initial": {
+        "n": 0,
+        "mean_loss": null
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    },
+    "2": {
+      "wordfreq_range": [
+        1.0,
+        1.0
+      ],
+      "word_initial": {
+        "n": 0,
+        "mean_loss": null
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    },
+    "3": {
+      "wordfreq_range": [
+        1.0,
+        2.0
+      ],
+      "word_initial": {
+        "n": 3648,
+        "mean_loss": 6.0581183433532715
+      },
+      "word_continuation": {
+        "n": 5443,
+        "mean_loss": 1.2324681282043457
+      }
+    },
+    "4": {
+      "wordfreq_range": [
+        2.0,
+        3.0
+      ],
+      "word_initial": {
+        "n": 1390,
+        "mean_loss": 5.00010347366333
+      },
+      "word_continuation": {
+        "n": 1914,
+        "mean_loss": 0.6552734971046448
+      }
+    },
+    "5": {
+      "wordfreq_range": [
+        3.0,
+        4.0
+      ],
+      "word_initial": {
+        "n": 942,
+        "mean_loss": 4.574998378753662
+      },
+      "word_continuation": {
+        "n": 1380,
+        "mean_loss": 0.60245281457901
+      }
+    },
+    "6": {
+      "wordfreq_range": [
+        4.0,
+        7.0
+      ],
+      "word_initial": {
+        "n": 1184,
+        "mean_loss": 4.252882480621338
+      },
+      "word_continuation": {
+        "n": 1679,
+        "mean_loss": 0.4631238579750061
+      }
+    },
+    "7": {
+      "wordfreq_range": [
+        7.0,
+        14.0
+      ],
+      "word_initial": {
+        "n": 1009,
+        "mean_loss": 3.722419261932373
+      },
+      "word_continuation": {
+        "n": 1370,
+        "mean_loss": 0.35647282004356384
+      }
+    },
+    "8": {
+      "wordfreq_range": [
+        14.0,
+        43.0
+      ],
+      "word_initial": {
+        "n": 1153,
+        "mean_loss": 3.057628631591797
+      },
+      "word_continuation": {
+        "n": 1514,
+        "mean_loss": 0.27911898493766785
+      }
+    },
+    "9": {
+      "wordfreq_range": [
+        43.0,
+        765.0
+      ],
+      "word_initial": {
+        "n": 786,
+        "mean_loss": 2.266239643096924
+      },
+      "word_continuation": {
+        "n": 1737,
+        "mean_loss": 0.12844379246234894
+      }
+    }
+  },
+  "by_wordfreqdecile_position_per_word": {
+    "0": {
+      "wordfreq_range": [
+        1.0,
+        1.0
+      ],
+      "n_words": 0,
+      "word_initial": {
+        "n_words": 0,
+        "mean_loss": null
+      },
+      "word_continuation": {
+        "n_words": 0,
+        "mean_loss": null
+      }
+    },
+    "1": {
+      "wordfreq_range": [
+        1.0,
+        1.0
+      ],
+      "n_words": 0,
+      "word_initial": {
+        "n_words": 0,
+        "mean_loss": null
+      },
+      "word_continuation": {
+        "n_words": 0,
+        "mean_loss": null
+      }
+    },
+    "2": {
+      "wordfreq_range": [
+        1.0,
+        1.0
+      ],
+      "n_words": 0,
+      "word_initial": {
+        "n_words": 0,
+        "mean_loss": null
+      },
+      "word_continuation": {
+        "n_words": 0,
+        "mean_loss": null
+      }
+    },
+    "3": {
+      "wordfreq_range": [
+        1.0,
+        2.0
+      ],
+      "n_words": 3706,
+      "word_initial": {
+        "n_words": 3648,
+        "mean_loss": 6.058117973860295
+      },
+      "word_continuation": {
+        "n_words": 3670,
+        "mean_loss": 1.1833399461591978
+      }
+    },
+    "4": {
+      "wordfreq_range": [
+        2.0,
+        3.0
+      ],
+      "n_words": 1418,
+      "word_initial": {
+        "n_words": 1390,
+        "mean_loss": 5.000103590589874
+      },
+      "word_continuation": {
+        "n_words": 1382,
+        "mean_loss": 0.6254119203865401
+      }
+    },
+    "5": {
+      "wordfreq_range": [
+        3.0,
+        4.0
+      ],
+      "n_words": 972,
+      "word_initial": {
+        "n_words": 942,
+        "mean_loss": 4.5749983508867755
+      },
+      "word_continuation": {
+        "n_words": 952,
+        "mean_loss": 0.6145687051242282
+      }
+    },
+    "6": {
+      "wordfreq_range": [
+        4.0,
+        8.0
+      ],
+      "n_words": 1524,
+      "word_initial": {
+        "n_words": 1471,
+        "mean_loss": 4.161424065334669
+      },
+      "word_continuation": {
+        "n_words": 1447,
+        "mean_loss": 0.42934551848163727
+      }
+    },
+    "7": {
+      "wordfreq_range": [
+        8.0,
+        24.0
+      ],
+      "n_words": 1209,
+      "word_initial": {
+        "n_words": 1199,
+        "mean_loss": 3.562394684769005
+      },
+      "word_continuation": {
+        "n_words": 1195,
+        "mean_loss": 0.33633119621676444
+      }
+    },
+    "8": {
+      "wordfreq_range": [
+        24.0,
+        101.0
+      ],
+      "n_words": 1116,
+      "word_initial": {
+        "n_words": 1087,
+        "mean_loss": 2.6787617549657043
+      },
+      "word_continuation": {
+        "n_words": 1050,
+        "mean_loss": 0.23505585750345961
+      }
+    },
+    "9": {
+      "wordfreq_range": [
+        101.0,
+        765.0
+      ],
+      "n_words": 1138,
+      "word_initial": {
+        "n_words": 375,
+        "mean_loss": 2.115903578315551
+      },
+      "word_continuation": {
+        "n_words": 1135,
+        "mean_loss": 0.10774848000615299
+      }
+    }
+  },
+  "per_word_summary": {
+    "n_multitoken_words": 11083,
+    "init_loss_mean": 4.693221092224121,
+    "cont_loss_mean": 0.663330078125,
+    "init_loss_std": 3.377422571182251,
+    "cont_loss_std": 1.488938808441162,
+    "diff_mean": 4.028865337371826,
+    "diff_std": 3.2555699348449707
+  }
+}

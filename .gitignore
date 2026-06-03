@@ -1,0 +1,38 @@
+# LaTeX build artifacts
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.blg
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz
+paper/_tmlr_main_template.tex
+paper/math_commands.tex
+# (we keep main.bbl committed so the arXiv tarball stays self-contained)
+
+# Build output we intentionally keep:
+!paper/main.pdf
+!paper/arxiv_submission.tar.gz
+!paper/main.bbl
+
+# RunPod execution logs and stdout dumps (kept locally for forensic purposes)
+*.log
+*.out
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.ipynb_checkpoints/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Large or transient ad-hoc outputs that aren't reproducible-from-source:
+*.tmp
+*.bak

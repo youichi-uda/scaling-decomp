@@ -1,0 +1,179 @@
+{
+  "model": "EleutherAI/pythia-410m",
+  "n_pred_tokens": 1233738,
+  "overall_mean_loss": 2.313239812850952,
+  "by_position": {
+    "word_initial": {
+      "n": 580174,
+      "mean_loss": 3.359999656677246
+    },
+    "word_continuation": {
+      "n": 273221,
+      "mean_loss": 1.5999119281768799
+    },
+    "other": {
+      "n": 380343,
+      "mean_loss": 1.2289385795593262
+    }
+  },
+  "by_depth": {
+    "0_initial": {
+      "n": 580174,
+      "mean_loss": 3.359999656677246
+    },
+    "1": {
+      "n": 111860,
+      "mean_loss": 2.095829725265503
+    },
+    "2": {
+      "n": 65364,
+      "mean_loss": 1.532979965209961
+    },
+    "3plus": {
+      "n": 95997,
+      "mean_loss": 1.0676202774047852
+    }
+  },
+  "by_freqdecile_position": {
+    "0": {
+      "freq_range": [
+        1.0,
+        19.0
+      ],
+      "word_initial": {
+        "n": 70278,
+        "mean_loss": 5.754136562347412
+      },
+      "word_continuation": {
+        "n": 38184,
+        "mean_loss": 3.0997722148895264
+      }
+    },
+    "1": {
+      "freq_range": [
+        19.0,
+        56.0
+      ],
+      "word_initial": {
+        "n": 78544,
+        "mean_loss": 4.742458820343018
+      },
+      "word_continuation": {
+        "n": 38946,
+        "mean_loss": 2.101349115371704
+      }
+    },
+    "2": {
+      "freq_range": [
+        56.0,
+        128.0
+      ],
+      "word_initial": {
+        "n": 72009,
+        "mean_loss": 4.1937031745910645
+      },
+      "word_continuation": {
+        "n": 42343,
+        "mean_loss": 1.577714443206787
+      }
+    },
+    "3": {
+      "freq_range": [
+        128.0,
+        285.0
+      ],
+      "word_initial": {
+        "n": 67315,
+        "mean_loss": 3.7592215538024902
+      },
+      "word_continuation": {
+        "n": 43864,
+        "mean_loss": 1.260267972946167
+      }
+    },
+    "4": {
+      "freq_range": [
+        285.0,
+        670.0
+      ],
+      "word_initial": {
+        "n": 69036,
+        "mean_loss": 3.2073962688446045
+      },
+      "word_continuation": {
+        "n": 33478,
+        "mean_loss": 1.160456895828247
+      }
+    },
+    "5": {
+      "freq_range": [
+        670.0,
+        1835.0
+      ],
+      "word_initial": {
+        "n": 51655,
+        "mean_loss": 2.5026636123657227
+      },
+      "word_continuation": {
+        "n": 38867,
+        "mean_loss": 1.2669857740402222
+      }
+    },
+    "6": {
+      "freq_range": [
+        1835.0,
+        4514.0
+      ],
+      "word_initial": {
+        "n": 46646,
+        "mean_loss": 1.9640885591506958
+      },
+      "word_continuation": {
+        "n": 32040,
+        "mean_loss": 0.7847073674201965
+      }
+    },
+    "7": {
+      "freq_range": [
+        4514.0,
+        17209.0
+      ],
+      "word_initial": {
+        "n": 55837,
+        "mean_loss": 1.6986713409423828
+      },
+      "word_continuation": {
+        "n": 5499,
+        "mean_loss": 0.29230886697769165
+      }
+    },
+    "8": {
+      "freq_range": [
+        17209.0,
+        38273.0
+      ],
+      "word_initial": {
+        "n": 68854,
+        "mean_loss": 1.166244626045227
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    },
+    "9": {
+      "freq_range": [
+        38273.0,
+        64482.0
+      ],
+      "word_initial": {
+        "n": 0,
+        "mean_loss": null
+      },
+      "word_continuation": {
+        "n": 0,
+        "mean_loss": null
+      }
+    }
+  }
+}

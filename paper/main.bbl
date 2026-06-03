@@ -1,0 +1,133 @@
+\begin{thebibliography}{15}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Biderman et~al.(2023)Biderman, Schoelkopf, Anthony, Bradley, O'Brien,
+  Hallahan, Khan, Purohit, Prashanth, Raff, Skowron, Sutawika, and van~der
+  Wal]{biderman2023pythia}
+Stella Biderman, Hailey Schoelkopf, Quentin~G. Anthony, Herbie Bradley, Kyle
+  O'Brien, Eric Hallahan, Mohammad~Aflah Khan, Shivanshu Purohit, USVSN~Sai
+  Prashanth, Edward Raff, Aviya Skowron, Lintang Sutawika, and Oskar van~der
+  Wal.
+\newblock Pythia: A suite for analyzing large language models across training
+  and scaling.
+\newblock In \emph{Proceedings of the 40th International Conference on Machine
+  Learning (ICML)}, volume 202 of \emph{PMLR}, pp.\  2397--2430, 2023.
+
+\bibitem[{BigScience Workshop} et~al.(2022){BigScience Workshop}, Scao, Fan,
+  Akiki, Pavlick, Ili\'c, Hesslow, Castagn\'e, Luccioni, Yvon, Gall\'e,
+  et~al.]{bigscience2022bloom}
+{BigScience Workshop}, Teven~Le Scao, Angela Fan, Christopher Akiki, Ellie
+  Pavlick, Suzana Ili\'c, Daniel Hesslow, Roman Castagn\'e, Alexandra~Sasha
+  Luccioni, Fran\c{c}ois Yvon, Matthias Gall\'e, et~al.
+\newblock {BLOOM}: A 176{B}-parameter open-access multilingual language model.
+\newblock \emph{arXiv preprint arXiv:2211.05100}, 2022.
+
+\bibitem[Black et~al.(2022)Black, Biderman, Hallahan, Anthony, Gao, Golding,
+  He, Leahy, McDonell, Phang, Pieler, Prashanth, Purohit, Reynolds, Tow, Wang,
+  and Weinbach]{black2022gptneox}
+Sid Black, Stella Biderman, Eric Hallahan, Quentin Anthony, Leo Gao, Laurence
+  Golding, Horace He, Connor Leahy, Kyle McDonell, Jason Phang, Michael Pieler,
+  USVSN~Sai Prashanth, Shivanshu Purohit, Laria Reynolds, Jonathan Tow, Ben
+  Wang, and Samuel Weinbach.
+\newblock {GPT-NeoX-20B}: An open-source autoregressive language model.
+\newblock In \emph{Proceedings of the ACL Workshop on Challenges \&
+  Perspectives in Creating Large Language Models (BigScience)}, 2022.
+
+\bibitem[Dey et~al.(2023)Dey, Gosal, Zhiming, Khachane, Marshall, Pathria, Tom,
+  and Hestness]{dey2023cerebras}
+Nolan Dey, Gurpreet Gosal, Chen Zhiming, Hemant Khachane, William Marshall,
+  Ribhu Pathria, Marvin Tom, and Joel Hestness.
+\newblock {Cerebras-GPT}: Open compute-optimal language models trained on the
+  {Cerebras} wafer-scale cluster.
+\newblock \emph{arXiv preprint arXiv:2304.03208}, 2023.
+
+\bibitem[Gao et~al.(2020)Gao, Biderman, Black, Golding, Hoppe, Foster, Phang,
+  He, Thite, Nabeshima, Presser, and Leahy]{gao2020pile}
+Leo Gao, Stella Biderman, Sid Black, Laurence Golding, Travis Hoppe, Charles
+  Foster, Jason Phang, Horace He, Anish Thite, Noa Nabeshima, Shawn Presser,
+  and Connor Leahy.
+\newblock The {Pile}: An 800{GB} dataset of diverse text for language modeling.
+\newblock \emph{arXiv preprint arXiv:2101.00027}, 2020.
+
+\bibitem[Hestness et~al.(2017)Hestness, Narang, Ardalani, Diamos, Jun,
+  Kianinejad, Patwary, Yang, and Zhou]{hestness2017deep}
+Joel Hestness, Sharan Narang, Newsha Ardalani, Gregory Diamos, Heewoo Jun,
+  Hassan Kianinejad, Md. Mostofa~Ali Patwary, Yang Yang, and Yanqi Zhou.
+\newblock Deep learning scaling is predictable, empirically.
+\newblock \emph{arXiv preprint arXiv:1712.00409}, 2017.
+
+\bibitem[Hoffmann et~al.(2022)Hoffmann, Borgeaud, Mensch, Buchatskaya, Cai,
+  Rutherford, Casas, Hendricks, Welbl, Clark, Hennigan, Noland, Millican,
+  van~den Driessche, Damoc, Guy, Osindero, Simonyan, Elsen, Rae, Vinyals, and
+  Sifre]{hoffmann2022chinchilla}
+Jordan Hoffmann, Sebastian Borgeaud, Arthur Mensch, Elena Buchatskaya, Trevor
+  Cai, Eliza Rutherford, Diego de~Las Casas, Lisa~Anne Hendricks, Johannes
+  Welbl, Aidan Clark, Tom Hennigan, Eric Noland, Katie Millican, George van~den
+  Driessche, Bogdan Damoc, Aurelia Guy, Simon Osindero, Karen Simonyan, Erich
+  Elsen, Jack~W. Rae, Oriol Vinyals, and Laurent Sifre.
+\newblock Training compute-optimal large language models.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, volume~35, 2022.
+
+\bibitem[Hutter(2021)]{hutter2021learning}
+Marcus Hutter.
+\newblock Learning curve theory.
+\newblock \emph{arXiv preprint arXiv:2102.04074}, 2021.
+
+\bibitem[Kaplan et~al.(2020)Kaplan, McCandlish, Henighan, Brown, Chess, Child,
+  Gray, Radford, Wu, and Amodei]{kaplan2020scaling}
+Jared Kaplan, Sam McCandlish, Tom Henighan, Tom~B. Brown, Benjamin Chess, Rewon
+  Child, Scott Gray, Alec Radford, Jeffrey Wu, and Dario Amodei.
+\newblock Scaling laws for neural language models.
+\newblock \emph{arXiv preprint arXiv:2001.08361}, 2020.
+
+\bibitem[Merity et~al.(2017)Merity, Xiong, Bradbury, and
+  Socher]{merity2017wikitext}
+Stephen Merity, Caiming Xiong, James Bradbury, and Richard Socher.
+\newblock Pointer sentinel mixture models.
+\newblock In \emph{International Conference on Learning Representations
+  (ICLR)}, 2017.
+
+\bibitem[Michaud et~al.(2023)Michaud, Liu, Girit, and
+  Tegmark]{michaud2023quantization}
+Eric~J. Michaud, Ziming Liu, Uzay Girit, and Max Tegmark.
+\newblock The quantization model of neural scaling.
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, volume~36, 2023.
+
+\bibitem[Oh \& Schuler(2024)Oh and Schuler]{oh2024surprisal}
+Byung-Doh Oh and William Schuler.
+\newblock Why does surprisal from larger transformer-based language models
+  provide a poorer fit to human reading times?
+\newblock \emph{Transactions of the Association for Computational Linguistics
+  (TACL)}, 2024.
+
+\bibitem[Paperno et~al.(2016)Paperno, Kruszewski, Lazaridou, Pham, Bernardi,
+  Pezzelle, Baroni, Boleda, and Fernandez]{paperno2016lambada}
+Denis Paperno, Germ\'an Kruszewski, Angeliki Lazaridou, Quan~Ngoc Pham,
+  Raffaella Bernardi, Sandro Pezzelle, Marco Baroni, Gemma Boleda, and Raquel
+  Fernandez.
+\newblock The {LAMBADA} dataset: Word prediction requiring a broad discourse
+  context.
+\newblock In \emph{Proceedings of the 54th Annual Meeting of the Association
+  for Computational Linguistics (ACL)}, pp.\  1525--1534, 2016.
+
+\bibitem[Schaeffer et~al.(2023)Schaeffer, Miranda, and
+  Koyejo]{schaeffer2023emergent}
+Rylan Schaeffer, Brando Miranda, and Sanmi Koyejo.
+\newblock Are emergent abilities of large language models a mirage?
+\newblock In \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, volume~36, 2023.
+\newblock Best Paper Award.
+
+\bibitem[Xia et~al.(2023)Xia, Artetxe, Du, Chen, and Stoyanov]{xia2023training}
+Mengzhou Xia, Mikel Artetxe, Jingfei Du, Danqi Chen, and Veselin Stoyanov.
+\newblock Training trajectories of language models across scales.
+\newblock In \emph{Findings of the Association for Computational Linguistics:
+  EMNLP 2023}, 2023.
+
+\end{thebibliography}

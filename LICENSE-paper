@@ -1,0 +1,20 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+The paper text, figures, and derived documents in this repository
+(specifically: paper/main.tex, paper/main.pdf, paper/figs/*,
+PAPER_DRAFT.md, PREREGISTRATION.md, RESULTS.md, README.md)
+are licensed under CC BY 4.0:
+
+   https://creativecommons.org/licenses/by/4.0/
+
+You are free to share and adapt these materials for any purpose,
+including commercially, provided you give appropriate credit, link to
+the license, and indicate if changes were made.
+
+Code in this repository (analysis scripts, measurement pipeline,
+figure-generation utilities) is licensed under MIT — see the LICENSE
+file.
+
+Third-party style files distributed with the paper (paper/tmlr.sty,
+paper/tmlr.bst, paper/fancyhdr.sty) retain their original licenses
+from the TMLR / fancyhdr authors.

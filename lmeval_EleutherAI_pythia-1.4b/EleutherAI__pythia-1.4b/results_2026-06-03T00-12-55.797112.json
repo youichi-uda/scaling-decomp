@@ -1,0 +1,341 @@
+{
+  "results": {
+    "lambada_openai": {
+      "name": "lambada_openai",
+      "alias": "lambada_openai",
+      "sample_len": 5153,
+      "perplexity,none": 6.256234080803147,
+      "perplexity_stderr,none": 0.16119814565643803,
+      "acc,none": 0.6114884533281584,
+      "acc_stderr,none": 0.006790600303325293
+    },
+    "piqa": {
+      "name": "piqa",
+      "alias": "piqa",
+      "sample_len": 1838,
+      "acc,none": 0.7094668117519043,
+      "acc_stderr,none": 0.010592765034696548,
+      "acc_norm,none": 0.70620239390642,
+      "acc_norm_stderr,none": 0.010627574080514925
+    },
+    "arc_easy": {
+      "name": "arc_easy",
+      "alias": "arc_easy",
+      "sample_len": 2376,
+      "acc,none": 0.6069023569023569,
+      "acc_stderr,none": 0.010022540618945322,
+      "acc_norm,none": 0.5395622895622896,
+      "acc_norm_stderr,none": 0.01022761638628915
+    },
+    "sciq": {
+      "name": "sciq",
+      "alias": "sciq",
+      "sample_len": 1000,
+      "acc,none": 0.863,
+      "acc_stderr,none": 0.01087884871433321,
+      "acc_norm,none": 0.788,
+      "acc_norm_stderr,none": 0.01293148186493811
+    }
+  },
+  "group_subtasks": {},
+  "configs": {
+    "arc_easy": {
+      "task": "arc_easy",
+      "dataset_path": "allenai/ai2_arc",
+      "dataset_name": "ARC-Easy",
+      "training_split": "train",
+      "validation_split": "validation",
+      "test_split": "test",
+      "doc_to_text": "Question: {{question}}\nAnswer:",
+      "doc_to_target": "{{choices.label.index(answerKey)}}",
+      "unsafe_code": false,
+      "doc_to_choice": "{{choices.text}}",
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "default",
+        "split": null,
+        "process_docs": null,
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "Question: {{question}}\nAnswer:",
+        "doc_to_choice": "{{choices.text}}",
+        "doc_to_target": "{{choices.label.index(answerKey)}}",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "acc",
+          "aggregation": "mean",
+          "higher_is_better": true
+        },
+        {
+          "metric": "acc_norm",
+          "aggregation": "mean",
+          "higher_is_better": true
+        }
+      ],
+      "output_type": "multiple_choice",
+      "repeats": 1,
+      "should_decontaminate": true,
+      "doc_to_decontamination_query": "Question: {{question}}\nAnswer:",
+      "metadata": {
+        "version": 1.0,
+        "pretrained": "EleutherAI/pythia-1.4b",
+        "dtype": "bfloat16",
+        "config_source": "/home/y1/.venv-bigshrink312/lib/python3.12/site-packages/lm_eval/tasks/arc/arc_easy.yaml"
+      }
+    },
+    "lambada_openai": {
+      "task": "lambada_openai",
+      "dataset_path": "EleutherAI/lambada_openai",
+      "dataset_name": "default",
+      "test_split": "test",
+      "doc_to_text": "{{text.split(' ')[:-1]|join(' ')}}",
+      "doc_to_target": "{{' '+text.split(' ')[-1]}}",
+      "unsafe_code": false,
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "default",
+        "split": null,
+        "process_docs": null,
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "{{text.split(' ')[:-1]|join(' ')}}",
+        "doc_to_choice": null,
+        "doc_to_target": "{{' '+text.split(' ')[-1]}}",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "perplexity",
+          "aggregation": "perplexity",
+          "higher_is_better": false
+        },
+        {
+          "metric": "acc",
+          "aggregation": "mean",
+          "higher_is_better": true
+        }
+      ],
+      "output_type": "loglikelihood",
+      "repeats": 1,
+      "should_decontaminate": true,
+      "doc_to_decontamination_query": "{{text}}",
+      "metadata": {
+        "version": 1.0,
+        "pretrained": "EleutherAI/pythia-1.4b",
+        "dtype": "bfloat16",
+        "config_source": "/home/y1/.venv-bigshrink312/lib/python3.12/site-packages/lm_eval/tasks/lambada/lambada_openai.yaml"
+      }
+    },
+    "piqa": {
+      "task": "piqa",
+      "dataset_path": "baber/piqa",
+      "training_split": "train",
+      "validation_split": "validation",
+      "doc_to_text": "Question: {{goal}}\nAnswer:",
+      "doc_to_target": "label",
+      "unsafe_code": false,
+      "doc_to_choice": "{{[sol1, sol2]}}",
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "default",
+        "split": null,
+        "process_docs": null,
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "Question: {{goal}}\nAnswer:",
+        "doc_to_choice": "{{[sol1, sol2]}}",
+        "doc_to_target": "label",
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "acc",
+          "aggregation": "mean",
+          "higher_is_better": true
+        },
+        {
+          "metric": "acc_norm",
+          "aggregation": "mean",
+          "higher_is_better": true
+        }
+      ],
+      "output_type": "multiple_choice",
+      "repeats": 1,
+      "should_decontaminate": true,
+      "doc_to_decontamination_query": "goal",
+      "metadata": {
+        "version": 1.0,
+        "pretrained": "EleutherAI/pythia-1.4b",
+        "dtype": "bfloat16",
+        "config_source": "/home/y1/.venv-bigshrink312/lib/python3.12/site-packages/lm_eval/tasks/piqa/piqa.yaml"
+      }
+    },
+    "sciq": {
+      "task": "sciq",
+      "dataset_path": "allenai/sciq",
+      "training_split": "train",
+      "validation_split": "validation",
+      "test_split": "test",
+      "doc_to_text": "{{support.lstrip()}}\nQuestion: {{question}}\nAnswer:",
+      "doc_to_target": 3,
+      "unsafe_code": false,
+      "doc_to_choice": "{{[distractor1, distractor2, distractor3, correct_answer]}}",
+      "description": "",
+      "target_delimiter": " ",
+      "fewshot_delimiter": "\n\n",
+      "fewshot_config": {
+        "sampler": "default",
+        "split": null,
+        "process_docs": null,
+        "fewshot_indices": null,
+        "samples": null,
+        "doc_to_text": "{{support.lstrip()}}\nQuestion: {{question}}\nAnswer:",
+        "doc_to_choice": "{{[distractor1, distractor2, distractor3, correct_answer]}}",
+        "doc_to_target": 3,
+        "gen_prefix": null,
+        "fewshot_delimiter": "\n\n",
+        "target_delimiter": " "
+      },
+      "num_fewshot": 0,
+      "metric_list": [
+        {
+          "metric": "acc",
+          "aggregation": "mean",
+          "higher_is_better": true
+        },
+        {
+          "metric": "acc_norm",
+          "aggregation": "mean",
+          "higher_is_better": true
+        }
+      ],
+      "output_type": "multiple_choice",
+      "repeats": 1,
+      "should_decontaminate": true,
+      "doc_to_decontamination_query": "{{support}} {{question}}",
+      "metadata": {
+        "version": 1.0,
+        "pretrained": "EleutherAI/pythia-1.4b",
+        "dtype": "bfloat16",
+        "config_source": "/home/y1/.venv-bigshrink312/lib/python3.12/site-packages/lm_eval/tasks/sciq/sciq.yaml"
+      }
+    }
+  },
+  "versions": {
+    "arc_easy": 1.0,
+    "lambada_openai": 1.0,
+    "piqa": 1.0,
+    "sciq": 1.0
+  },
+  "n-shot": {
+    "arc_easy": 0,
+    "lambada_openai": 0,
+    "piqa": 0,
+    "sciq": 0
+  },
+  "higher_is_better": {
+    "arc_easy": {
+      "acc": true,
+      "acc_norm": true
+    },
+    "lambada_openai": {
+      "perplexity": false,
+      "acc": true
+    },
+    "piqa": {
+      "acc": true,
+      "acc_norm": true
+    },
+    "sciq": {
+      "acc": true,
+      "acc_norm": true
+    }
+  },
+  "n-samples": {
+    "lambada_openai": {
+      "original": 5153,
+      "effective": 5153
+    },
+    "piqa": {
+      "original": 1838,
+      "effective": 1838
+    },
+    "arc_easy": {
+      "original": 2376,
+      "effective": 2376
+    },
+    "sciq": {
+      "original": 1000,
+      "effective": 1000
+    }
+  },
+  "config": {
+    "model": "hf",
+    "model_args": {
+      "pretrained": "EleutherAI/pythia-1.4b",
+      "dtype": "bfloat16"
+    },
+    "model_num_parameters": 1414647808,
+    "model_dtype": "torch.bfloat16",
+    "model_revision": "main",
+    "model_sha": "fedc38a16eea3bd36a96b906d78d11d2ce18ed79",
+    "batch_size": "4",
+    "batch_sizes": [],
+    "device": "cuda:0",
+    "use_cache": null,
+    "limit": null,
+    "bootstrap_iters": 100000,
+    "gen_kwargs": {},
+    "random_seed": 0,
+    "numpy_seed": 1234,
+    "torch_seed": 1234,
+    "fewshot_seed": 1234
+  },
+  "git_hash": null,
+  "date": 1780413074.7066584,
+  "pretty_env_info": "PyTorch version: 2.6.0+cu124\nIs debug build: False\nCUDA used to build PyTorch: 12.4\nROCM used to build PyTorch: N/A\n\nOS: Ubuntu 26.04 LTS (x86_64)\nGCC version: (Ubuntu 15.2.0-16ubuntu1) 15.2.0\nClang version: 21.1.8 (6ubuntu1)\nCMake version: version 4.2.3\nLibc version: glibc-2.43\n\nPython version: 3.12.13 (main, Apr 14 2026, 14:29:00) [Clang 22.1.3 ] (64-bit runtime)\nPython platform: Linux-7.0.0-15-generic-x86_64-with-glibc2.43\nIs CUDA available: True\nCUDA runtime version: 12.4.131\nCUDA_MODULE_LOADING set to: LAZY\nGPU models and configuration: GPU 0: NVIDIA GeForce RTX 4070 Ti SUPER\nNvidia driver version: 595.71.05\ncuDNN version: Could not collect\nHIP runtime version: N/A\nMIOpen runtime version: N/A\nIs XNNPACK available: True\n\nCPU:\nアーキテクチャ:                      x86_64\nCPU 操作モード:                      32-bit, 64-bit\nアドレスサイズ:                      48 bits physical, 48 bits virtual\nバイト順序:                          Little Endian\nCPU:                                 32\nオンラインになっている CPU のリスト: 0-31\nベンダー ID:                         AuthenticAMD\nモデル名:                            AMD Ryzen 9 9950X 16-Core Processor\nCPU ファミリー:                      26\nモデル:                              68\nコアあたりのスレッド数:              2\nソケットあたりのコア数:              16\nソケット数:                          1\nステッピング:                        0\n周波数ブースト:                      使用する\nCPU スケーリング MHz:                81%\nCPU 最大 MHz:                        5756.4521\nCPU 最小 MHz:                        624.1940\nBogoMIPS:                            8583.31\nフラグ:                              fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good amd_lbr_v2 nopl xtopology nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpuid_fault cpb cat_l3 cdp_l3 hw_pstate ssbd mba perfmon_v2 ibrs ibpb stibp ibrs_enhanced vmmcall fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local user_shstk avx_vnni avx512_bf16 clzero irperf xsaveerptr rdpru wbnoinvd cppc arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif x2avic v_spec_ctrl vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid bus_lock_detect movdiri movdir64b overflow_recov succor smca fsrm avx512_vp2intersect flush_l1d amd_lbr_pmc_freeze\n仮想化:                              AMD-V\nL1d キャッシュ:                      768 KiB (16 インスタンス)\nL1i キャッシュ:                      512 KiB (16 インスタンス)\nL2 キャッシュ:                       16 MiB (16 インスタンス)\nL3 キャッシュ:                       64 MiB (2 インスタンス)\nNUMA ノード数:                       1\nNUMA ノード 0 CPU:                   0-31\n脆弱性 Gather data sampling:         Not affected\n脆弱性 Ghostwrite:                   Not affected\n脆弱性 Indirect target selection:    Not affected\n脆弱性 Itlb multihit:                Not affected\n脆弱性 L1tf:                         Not affected\n脆弱性 Mds:                          Not affected\n脆弱性 Meltdown:                     Not affected\n脆弱性 Mmio stale data:              Not affected\n脆弱性 Old microcode:                Not affected\n脆弱性 Reg file data sampling:       Not affected\n脆弱性 Retbleed:                     Not affected\n脆弱性 Spec rstack overflow:         Mitigation; IBPB on VMEXIT only\n脆弱性 Spec store bypass:            Mitigation; Speculative Store Bypass disabled via prctl\n脆弱性 Spectre v1:                   Mitigation; usercopy/swapgs barriers and __user pointer sanitization\n脆弱性 Spectre v2:                   Mitigation; Enhanced / Automatic IBRS; IBPB conditional; STIBP always-on; PBRSB-eIBRS Not affected; BHI Not affected\n脆弱性 Srbds:                        Not affected\n脆弱性 Tsa:                          Not affected\n脆弱性 Tsx async abort:              Not affected\n脆弱性 Vmscape:                      Mitigation; IBPB on VMEXIT\n\nVersions of relevant libraries:\n[pip3] numpy==2.4.6\n[pip3] nvidia-cublas-cu12==12.4.5.8\n[pip3] nvidia-cuda-cupti-cu12==12.4.127\n[pip3] nvidia-cuda-nvrtc-cu12==12.4.127\n[pip3] nvidia-cuda-runtime-cu12==12.4.127\n[pip3] nvidia-cudnn-cu12==9.1.0.70\n[pip3] nvidia-cufft-cu12==11.2.1.3\n[pip3] nvidia-curand-cu12==10.3.5.147\n[pip3] nvidia-cusolver-cu12==11.6.1.9\n[pip3] nvidia-cusparse-cu12==12.3.1.170\n[pip3] nvidia-cusparselt-cu12==0.6.2\n[pip3] nvidia-nccl-cu12==2.21.5\n[pip3] nvidia-nvjitlink-cu12==12.4.127\n[pip3] nvidia-nvtx-cu12==12.4.127\n[pip3] torch==2.6.0+cu124\n[pip3] triton==3.2.0\n[conda] Could not collect",
+  "transformers_version": "5.9.0",
+  "lm_eval_version": "0.4.12",
+  "upper_git_hash": null,
+  "tokenizer_pad_token": [
+    "<|padding|>",
+    "1"
+  ],
+  "tokenizer_eos_token": [
+    "<|endoftext|>",
+    "0"
+  ],
+  "tokenizer_bos_token": [
+    "<|endoftext|>",
+    "0"
+  ],
+  "eot_token_id": 0,
+  "max_length": 2048,
+  "task_hashes": {},
+  "model_source": "hf",
+  "model_name": "EleutherAI/pythia-1.4b",
+  "model_name_sanitized": "EleutherAI__pythia-1.4b",
+  "system_instruction": null,
+  "system_instruction_sha": null,
+  "fewshot_as_multiturn": null,
+  "chat_template": null,
+  "chat_template_sha": null,
+  "total_evaluation_time_seconds": "104.51075851300266"
+}
